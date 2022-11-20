@@ -67,7 +67,7 @@ public class WebView : MonoBehaviour
     
     public void StartWebPageAsync( string url )
     {
-        Url = url;
+        Url = url.Trim();
         StartCoroutine( StartWebPage() );
     }
 

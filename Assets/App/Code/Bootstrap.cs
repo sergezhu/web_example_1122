@@ -114,7 +114,7 @@
 
 		private void ShowWebView( string url )
 		{
-			Debug.Log( $"Show WebView on {url}" );
+			Debug.Log( $"Show WebView on [{url}]" );
 			_webView.StartWebPageAsync( url );
 		}
 
