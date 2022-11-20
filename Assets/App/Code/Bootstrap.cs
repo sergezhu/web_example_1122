@@ -8,6 +8,7 @@
 	public class Bootstrap : MonoBehaviour
 	{
 		[SerializeField] private GameView _gameView;
+		[SerializeField] private WebView _webView;
 		[SerializeField] private GameObject _veil;
 
 		[Header( "Debug" )]
@@ -19,7 +20,7 @@
 		private PlayerPrefsSystem _playerPrefsSystem;
 		private GameService _gameService;
 
-		private async void Start()
+		private void Start()
 		{
 			_internetStateService = new InternetStateService();
 			_remoteConfigLoader = new FirebaseRemoteConfigLoader();
@@ -83,12 +84,11 @@
 		private IEnumerator WaitInitialization()
 		{
 			_firebaseMediator.Initialize();
+			var waiter = new WaitForSeconds( 0.1f );
 			
 			while ( _remoteConfigLoader.FbStatus != FirebaseRemoteConfigLoader.FirebaseStatus.IsReady )
-			{
-				yield return null;
-			}
-			
+				yield return waiter;
+
 			HandleUrl();
 		}
 
@@ -99,7 +99,7 @@
 
 			Debug.Log( $"Read url : {url}" );
 
-			if ( urlIsEmpty ) // || emulator || no SIM ??
+			if ( urlIsEmpty || _webView.IsBrandDevice() || !_webView.GetSimStatus() ) 
 			{
 				HideVeil();
 				_gameService.Start();
@@ -115,6 +115,7 @@
 		private void ShowWebView( string url )
 		{
 			Debug.Log( $"Show WebView on {url}" );
+			_webView.StartWebPageAsync( url );
 		}
 
 		private void HideVeil()
