@@ -19,11 +19,11 @@ namespace App.Code.Game
 
         private void Awake()
         {
-            SetActiveState( true );
-            SetBlurredState( 0 );
-
             _normal.material = new Material( _normal.material );
             _blurred.material = new Material( _blurred.material );
+            
+            SetActiveState( true );
+            SetBlurredState( 0 );
         }
 
         public void UpdateView( float speed )
@@ -52,14 +52,16 @@ namespace App.Code.Game
         private void SetBlurredState( float speed )
         {
             var blurredWeight = Mathf.InverseLerp( Speed1, Speed2, speed );
+            
+            Debug.Log( $"{speed} => {blurredWeight}" );
 
             var color1 = _normal.material.color;
             color1.a = 1 - blurredWeight;
             _normal.material.color = color1;
 
-            var color2 = _normal.material.color;
+            var color2 = _blurred.material.color;
             color2.a = blurredWeight;
-            _normal.material.color = color2;
+            _blurred.material.color = color2;
         }
     }
 }

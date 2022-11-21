@@ -300,6 +300,9 @@ public class WebView : MonoBehaviour
 
     void OnGUI()
     {
+        if ( _webViewObject == null )
+            return;
+        
         var size = Screen.height * 150f / 1920f;
         var offset = Screen.height * 20f / 1920f;
         var x = offset;

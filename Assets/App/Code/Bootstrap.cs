@@ -36,6 +36,13 @@
 			var prefsData = _playerPrefsSystem.Load();
 			var hasInternet = _internetStateService.Check();
 
+
+			HideVeil();
+			_gameService.Start();
+			return;
+			
+			
+
 			if ( prefsData != null )
 			{
 				if ( hasInternet )
