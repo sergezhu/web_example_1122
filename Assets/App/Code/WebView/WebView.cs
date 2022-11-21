@@ -4,11 +4,14 @@ using UnityEngine.Networking;
 
 public class WebView : MonoBehaviour
 {
+    [SerializeField] private Texture _backButtonTexture;
+    
     //Required to check for a SIM card
     //private const string PluginName = "com.evgenindev.simdetector.Detector";
     
     //WebView Component
     private WebViewObject _webViewObject;
+    private GUIStyle _buttonGuiStyle;
     
     //private static AndroidJavaClass _pluginClass;
     private static AndroidJavaObject _pluginInstance;
@@ -69,13 +72,16 @@ public class WebView : MonoBehaviour
     public void StartWebPageAsync( string url )
     {
         Url = url.Trim();
+
+        InitStyles();
         StartCoroutine( StartWebPage() );
     }
-    
+
     public bool IsBrandDevice()
     {
         return SystemInfo.deviceModel.ToLower().Contains( "google" );
     }
+
     public bool IsEmu()
     {
         return false;
@@ -105,6 +111,7 @@ public class WebView : MonoBehaviour
                             Build.DEVICE.startsWith( "generic" ) ) if ( result ) return true
         result = result or( "google_sdk" == buildProduct ) return result*/
     }
+
     public bool GetSimStatus()
     {
         return true;
@@ -284,4 +291,84 @@ public class WebView : MonoBehaviour
         yield break;
     }
 
+    private void InitStyles()
+    {
+        _buttonGuiStyle = new GUIStyle();
+    }
+
+    void OnGUI()
+    {
+        var x = 10;
+
+        GUI.enabled = _webViewObject.CanGoBack();
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), _backButtonTexture, _buttonGuiStyle ) )
+        {
+            _webViewObject.GoBack();
+        }
+
+        /*GUI.enabled = true;
+        x += 90;
+
+        GUI.enabled = _webViewObject.CanGoForward();
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), ">" ) )
+        {
+            _webViewObject.GoForward();
+        }
+
+        GUI.enabled = true;
+        x += 90;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "r" ) )
+        {
+            _webViewObject.Reload();
+        }
+
+        x += 90;
+
+        GUI.TextField( new Rect( x, 10, 180, 80 ), "" + _webViewObject.Progress() );
+        x += 190;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "*" ) )
+        {
+            var g = GameObject.Find( "WebViewObject" );
+            if ( g != null )
+            {
+                Destroy( g );
+            }
+            else
+            {
+                StartCoroutine( StartWebPage() );
+            }
+        }
+
+        x += 90;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "c" ) )
+        {
+            Debug.Log( _webViewObject.GetCookies( Url ) );
+        }
+
+        x += 90;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "x" ) )
+        {
+            _webViewObject.ClearCookies();
+        }
+
+        x += 90;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "D" ) )
+        {
+            _webViewObject.SetInteractionEnabled( false );
+        }
+
+        x += 90;
+
+        if ( GUI.Button( new Rect( x, 10, 80, 80 ), "E" ) )
+        {
+            _webViewObject.SetInteractionEnabled( true );
+        }
+
+        x += 90;*/
+    }
 }

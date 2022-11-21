@@ -789,6 +789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010134ee59344c5b958f2e467c163d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backButtonTexture: {fileID: 2800000, guid: ae1fbc9a7ae4e904580360598789c9b8, type: 3}
 --- !u!4 &1910971722
 Transform:
   m_ObjectHideFlags: 0
