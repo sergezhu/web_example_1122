@@ -1,13 +1,44 @@
 {
-    "m_SelectedDeviceId": "",
+    "m_SelectedDeviceId": "357a8c970804",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "357a8c970804",
+        "name": "com.SomeCompany.ExampleTask",
+        "processId": 16892,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownPackagesForSerialization": [],
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "357a8c970804",
+            "name": "com.ZhumanzhiGames.SlideAndCollect",
+            "processId": 7105,
+            "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "com.SomeCompany.ExampleTask",
+            "processId": 13395,
+            "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "com.SomeCompany.ExampleTask",
+            "processId": 13695,
+            "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "com.SomeCompany.ExampleTask",
+            "processId": 16370,
+            "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "com.SomeCompany.ExampleTask",
+            "processId": 16892,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {
@@ -16,7 +47,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -32,7 +63,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
@@ -41,9 +72,20 @@
         ]
     },
     "m_MemoryViewerState": {
-        "MemoryWindowHeight": 0.0,
-        "MemoryWindowWidth": 0.0,
-        "MemoryTypeEnabled": [],
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
         "MemoryGroup": 2,
         "Behavior": 0
     },

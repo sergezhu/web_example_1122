@@ -584,9 +584,9 @@ public class WebViewObject : MonoBehaviour
             return;
 #endif
 
-#pragma warning disable CS0162 // Обнаружен недостижимый код
+#pragma warning disable CS0162 // РћР±РЅР°СЂСѓР¶РµРЅ РЅРµРґРѕСЃС‚РёР¶РёРјС‹Р№ РєРѕРґ
         mMarginLeft = left;
-#pragma warning restore CS0162 // Обнаружен недостижимый код
+#pragma warning restore CS0162 // РћР±РЅР°СЂСѓР¶РµРЅ РЅРµРґРѕСЃС‚РёР¶РёРјС‹Р№ РєРѕРґ
         mMarginTop = top;
         mMarginRight = right;
         mMarginBottom = bottom;

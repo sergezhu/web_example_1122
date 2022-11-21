@@ -1,131 +1,57 @@
+/*
+ * Copyright (C) 2012 GREE, Inc.
+ * 
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * 
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software
+ *    in a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
 using System.Collections;
 using UnityEngine;
+#if UNITY_2018_4_OR_NEWER
 using UnityEngine.Networking;
+#endif
+using UnityEngine.UI;
 
-public class WebView : MonoBehaviour
+public class SampleWebView : MonoBehaviour
 {
-    //Required to check for a SIM card
-    private const string PluginName = "com.evgenindev.simdetector.Detector";
-    
-    //WebView Component
-    private WebViewObject _webViewObject;
-    
-    private static AndroidJavaClass _pluginClass;
-    private static AndroidJavaObject _pluginInstance;
-    private static AndroidJavaClass _unityPlayer;
-    private static AndroidJavaObject _unityActivity;
+    public string Url;
+    public Text status;
+    WebViewObject webViewObject;
 
-    public string Url { get; private set; }
-
-    public static AndroidJavaClass PluginClass
+    IEnumerator Start()
     {
-        get
-        {
-            if(_pluginClass == null)
-            {
-                _pluginClass = new AndroidJavaClass(PluginName);
-            }
-            return _pluginClass;
-        }
-    }
-    
-    public static AndroidJavaObject PluginInstance
-    {
-        get
-        {
-            if( _pluginInstance == null)
-            {
-                _pluginInstance = PluginClass.CallStatic<AndroidJavaObject>("getInstance");
-            }
-            return _pluginInstance;
-        }
-    }
-    
-    public static AndroidJavaClass UnityPlayer
-    {
-        get
-        {
-            if(_unityPlayer == null)
-            {
-                _unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            }
-            return _unityPlayer;
-        }
-    }
-    
-    public static AndroidJavaObject UnityActivity
-    {
-        get
-        {
-            if(_unityActivity == null)
-            {
-                _unityActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            }
-            return _unityActivity;
-        }
-    }
-    
-    public void StartWebPageAsync( string url )
-    {
-        Url = url.Trim();
-        StartCoroutine( StartWebPage() );
-    }
-
-    public bool IsBrandDevice()
-    {
-        return SystemInfo.deviceModel.ToLower().Contains( "google" );
-    }
-
-    public bool IsEmu()
-    {
-        return true;
-        
-        /*if ( BuildConfig.DEBUG ) return false // when developer use this build on
-        emulator
-        val phoneModel = Build.MODEL val buildProduct = Build.PRODUCT
-        val buildHardware = Build.HARDWARE
-        var result = (Build.FINGERPRINT.startsWith( "generic" )
-                   || phoneModel.contains( "google_sdk" )
-                   || phoneModel.lowercase( Locale.getDefault() ).contains( "droid4x" )
-                   || phoneModel.contains( "Emulator" )
-                   || phoneModel.contains( "Android SDK built for x86" )
-                   || Build.MANUFACTURER.contains( "Genymotion" )
-                   || buildHardware == "goldfish"
-                   || buildHardware == "vbox86"
-                   || buildProduct == "sdk"
-                   || buildProduct == "google_sdk"
-                   || buildProduct == "sdk_x86"
-                   || buildProduct == "vbox86p"
-                   || Build.BOARD.lowercase( Locale.getDefault() ).contains( "nox" )
-                   || Build.BOOTLOADER.lowercase( Locale.getDefault() ).contains( "nox" )
-                   || buildHardware.lowercase( Locale.getDefault() ).contains( "nox" )
-                   || buildProduct.lowercase( Locale.getDefault() ).contains( "nox" ))
-        if ( result ) return true
-        result = result or( Build.BRAND.startsWith( "generic" ) &&
-                            Build.DEVICE.startsWith( "generic" ) ) if ( result ) return true
-        result = result or( "google_sdk" == buildProduct ) return result*/
-    }
-    public bool GetSimStatus()
-    {
-        int sim = PluginInstance.Call<int>("getSimStatus", UnityActivity);
-        return sim == 1;
-    }
-
-    private IEnumerator StartWebPage()
-    {
-        _webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
-        _webViewObject.Init(
+        webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
+        webViewObject.Init(
             cb: (msg) =>
             {
                 Debug.Log(string.Format("CallFromJS[{0}]", msg));
+                status.text = msg;
+                status.GetComponent<Animation>().Play();
             },
             err: (msg) =>
             {
                 Debug.Log(string.Format("CallOnError[{0}]", msg));
+                status.text = msg;
+                status.GetComponent<Animation>().Play();
             },
             httpErr: (msg) =>
             {
                 Debug.Log(string.Format("CallOnHttpError[{0}]", msg));
+                status.text = msg;
+                status.GetComponent<Animation>().Play();
             },
             started: (msg) =>
             {
@@ -187,7 +113,7 @@ public class WebView : MonoBehaviour
                     "   }" +
                     "};");
 #endif
-                _webViewObject.EvaluateJS(@"Unity.call('ua=' + navigator.userAgent)");
+                webViewObject.EvaluateJS(@"Unity.call('ua=' + navigator.userAgent)");
             }
             //transparent: false,
             //zoom: true,
@@ -205,7 +131,7 @@ public class WebView : MonoBehaviour
         webViewObject.bitmapRefreshCycle = 1;
 #endif
         // cf. https://github.com/gree/unity-webview/pull/512
-        // Added alertDialogEnabled flag to enable/disable alert/confirm/prompt dialogs. by KojiNakamaru · Pull Request #512 · gree/unity-webview
+        // Added alertDialogEnabled flag to enable/disable alert/confirm/prompt dialogs. by KojiNakamaru Â· Pull Request #512 Â· gree/unity-webview
         //webViewObject.SetAlertDialogEnabled(false);
 
         // cf. https://github.com/gree/unity-webview/pull/728
@@ -213,39 +139,34 @@ public class WebView : MonoBehaviour
         //webViewObject.SetMicrophoneAccess(true);
 
         // cf. https://github.com/gree/unity-webview/pull/550
-        // introduced SetURLPattern(..., hookPattern). by KojiNakamaru · Pull Request #550 · gree/unity-webview
+        // introduced SetURLPattern(..., hookPattern). by KojiNakamaru Â· Pull Request #550 Â· gree/unity-webview
         //webViewObject.SetURLPattern("", "^https://.*youtube.com", "^https://.*google.com");
 
         // cf. https://github.com/gree/unity-webview/pull/570
-        // Add BASIC authentication feature (Android and iOS with WKWebView only) by takeh1k0 · Pull Request #570 · gree/unity-webview
+        // Add BASIC authentication feature (Android and iOS with WKWebView only) by takeh1k0 Â· Pull Request #570 Â· gree/unity-webview
         //webViewObject.SetBasicAuthInfo("id", "password");
 
         //webViewObject.SetScrollbarsVisibility(true);
 
-        _webViewObject.SetMargins(0, 0, 0, 0);
-        _webViewObject.SetTextZoom(100);  // android only. cf. https://stackoverflow.com/questions/21647641/android-webview-set-font-size-system-default/47017410#47017410
-        _webViewObject.SetVisibility(true);
+        webViewObject.SetMargins(5, 100, 5, Screen.height / 4);
+        webViewObject.SetTextZoom(100);  // android only. cf. https://stackoverflow.com/questions/21647641/android-webview-set-font-size-system-default/47017410#47017410
+        webViewObject.SetVisibility(true);
 
 #if !UNITY_WEBPLAYER && !UNITY_WEBGL
-        if (Url.StartsWith("http"))
-        {
-            _webViewObject.LoadURL(Url.Replace(" ", "%20"));
-        }
-        else
-        {
+        if (Url.StartsWith("http")) {
+            webViewObject.LoadURL(Url.Replace(" ", "%20"));
+        } else {
             var exts = new string[]{
                 ".jpg",
                 ".js",
                 ".html"  // should be last
             };
-            foreach (var ext in exts)
-            {
+            foreach (var ext in exts) {
                 var url = Url.Replace(".html", ext);
                 var src = System.IO.Path.Combine(Application.streamingAssetsPath, url);
                 var dst = System.IO.Path.Combine(Application.persistentDataPath, url);
                 byte[] result = null;
-                if (src.Contains("://"))
-                {  // for Android
+                if (src.Contains("://")) {  // for Android
 #if UNITY_2018_4_OR_NEWER
                     // NOTE: a more complete code that utilizes UnityWebRequest can be found in https://github.com/gree/unity-webview/commit/2a07e82f760a8495aa3a77a23453f384869caba7#diff-4379160fa4c2a287f414c07eb10ee36d
                     var unityWebRequest = UnityWebRequest.Get(src);
@@ -256,15 +177,12 @@ public class WebView : MonoBehaviour
                     yield return www;
                     result = www.bytes;
 #endif
-                }
-                else
-                {
+                } else {
                     result = System.IO.File.ReadAllBytes(src);
                 }
                 System.IO.File.WriteAllBytes(dst, result);
-                if (ext == ".html")
-                {
-                    _webViewObject.LoadURL("file://" + dst.Replace(" ", "%20"));
+                if (ext == ".html") {
+                    webViewObject.LoadURL("file://" + dst.Replace(" ", "%20"));
                     break;
                 }
             }
@@ -279,4 +197,60 @@ public class WebView : MonoBehaviour
         yield break;
     }
 
+    void OnGUI()
+    {
+        var x = 10;
+
+        GUI.enabled = webViewObject.CanGoBack();
+        if (GUI.Button(new Rect(x, 10, 80, 80), "<")) {
+            webViewObject.GoBack();
+        }
+        GUI.enabled = true;
+        x += 90;
+
+        GUI.enabled = webViewObject.CanGoForward();
+        if (GUI.Button(new Rect(x, 10, 80, 80), ">")) {
+            webViewObject.GoForward();
+        }
+        GUI.enabled = true;
+        x += 90;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "r")) {
+            webViewObject.Reload();
+        }
+        x += 90;
+
+        GUI.TextField(new Rect(x, 10, 180, 80), "" + webViewObject.Progress());
+        x += 190;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "*")) {
+            var g = GameObject.Find("WebViewObject");
+            if (g != null) {
+                Destroy(g);
+            } else {
+                StartCoroutine(Start());
+            }
+        }
+        x += 90;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "c")) {
+            Debug.Log(webViewObject.GetCookies(Url));
+        }
+        x += 90;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "x")) {
+            webViewObject.ClearCookies();
+        }
+        x += 90;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "D")) {
+            webViewObject.SetInteractionEnabled(false);
+        }
+        x += 90;
+
+        if (GUI.Button(new Rect(x, 10, 80, 80), "E")) {
+            webViewObject.SetInteractionEnabled(true);
+        }
+        x += 90;
+    }
 }

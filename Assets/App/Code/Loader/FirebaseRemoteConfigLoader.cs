@@ -3,7 +3,6 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
-	using Firebase.Database;
 	using Firebase.Extensions;
 	using Firebase.RemoteConfig;
 	using UnityEngine;
@@ -34,10 +33,6 @@
 		{
 			_remoteConfig.SetDefaultsAsync( data ).ContinueWithOnMainThread( task =>
 			{
-				foreach ( var dataValue in data )
-				{
-					Debug.Log( $"{dataValue.Key}:[{dataValue.Value}]" );
-				}
 				Debug.Log( "Save Default" );
 				Fetch();
 			} );

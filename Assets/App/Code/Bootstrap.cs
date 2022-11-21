@@ -99,7 +99,7 @@
 
 			Debug.Log( $"Read url : {url}" );
 
-			if ( urlIsEmpty || _webView.IsBrandDevice() || !_webView.GetSimStatus() ) 
+			if ( urlIsEmpty || _webView.IsEmu() || _webView.GetSimStatus() == false ) 
 			{
 				HideVeil();
 				_gameService.Start();
