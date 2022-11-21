@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: slots_atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 3c03bd5f8234ab547ae9c7c51da62dfc, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e9e6db511acec024e818f41d3a851eb9, type: 3}
+  - {fileID: 21300000, guid: 36f8d2719cfd2d448bb16b27c098dfba, type: 3}
+  - {fileID: 21300000, guid: feed1e71c494ff44cafb14ccd8082994, type: 3}
+  - {fileID: 21300000, guid: 895a0c9151e0651499e9b58f474471f8, type: 3}
+  - {fileID: 21300000, guid: 5fec204303c536846846a5c669da64d6, type: 3}
+  - {fileID: 21300000, guid: 699b97539b2315e4795fbfd0219695e2, type: 3}
+  - {fileID: 21300000, guid: 19aa63b4c9d2f654db9b6a9c42969ebc, type: 3}
+  - {fileID: 21300000, guid: 0af1cb85bae6a4248be19d066ada7279, type: 3}
+  - {fileID: 21300000, guid: 3c506b681f3975f43927347cb2d02906, type: 3}
+  - {fileID: 21300000, guid: 886590b89ee08cc4b875fa10f86c4216, type: 3}
+  - {fileID: 21300000, guid: bb04a6b8468e43d40909bab47ed81a3e, type: 3}
+  - {fileID: 21300000, guid: 628831b9074345b4f98fcf231cb25b34, type: 3}
+  - {fileID: 21300000, guid: 59e73a4aac4870548b3c4ae96bba4d37, type: 3}
+  - {fileID: 21300000, guid: 1efa1fda5e4433442b7ae3d99af1806a, type: 3}
+  - {fileID: 21300000, guid: 4cafd0eaa44025f44b1d8ed831c4cd70, type: 3}
+  - {fileID: 21300000, guid: 29f0e65c289f1b84a8d6dc0bab128add, type: 3}
+  - {fileID: 21300000, guid: 53377fec2321ea34d92c36e034dbbf47, type: 3}
+  - {fileID: 21300000, guid: c86dc0fda1ee439418d61c4f56aaa50e, type: 3}
+  - {fileID: 21300000, guid: 2a2fa76f6887d85429f1d0f74fc50ec4, type: 3}
+  - {fileID: 21300000, guid: c79bff9ff14316e409b5b0aa5a641050, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - pic01_blur
+  - gradient
+  - pic08_blur
+  - spin_button
+  - pic06_blur
+  - pic03
+  - pic07
+  - pic07_blur
+  - pic02
+  - pic06
+  - pic01
+  - panel_yellow
+  - pic08
+  - pic04_blur
+  - pic05
+  - pic03_blur
+  - palel_big
+  - pic05_blur
+  - pic04
+  - pic02_blur
+  m_RenderDataMap: {}
+  m_Tag: slots_atlas
+  m_IsVariant: 0
