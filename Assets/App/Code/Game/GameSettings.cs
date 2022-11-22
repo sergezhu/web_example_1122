@@ -10,6 +10,7 @@
 		public float MinSpeed;
 		public float SpeedThreshold;
 		public float DelayBeforeStop;
+		public float RandomDelayBeforeStart;
 
 		[Space]
 		public int[] TargetIndex;

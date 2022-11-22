@@ -5,6 +5,7 @@
 	using DG.Tweening;
 	using UniRx;
 	using UnityEngine;
+	using Random = UnityEngine.Random;
 
 	public enum RowState
 	{
@@ -150,7 +151,7 @@
 				return;
 
 			_state.Value = RowState.Accelerate;
-			TweenSpeed( duration, targetMaxSpeed, () => _state.Value = RowState.MaxSpeed );
+			TweenSpeed( duration, targetMaxSpeed, _settings.RandomDelayBeforeStart, () => _state.Value = RowState.MaxSpeed );
 		}
 
 		public void Brake( int picIndex, float duration, float targetMinSpeed )
@@ -159,7 +160,7 @@
 				return;
 
 			_state.Value = RowState.Decelerate;
-			TweenSpeed( duration, targetMinSpeed, () => Finishing( picIndex, _settings.LoopsBeforeStop ) );
+			TweenSpeed( duration, targetMinSpeed, 0, () => Finishing( picIndex, _settings.LoopsBeforeStop ) );
 		}
 
 		private void Finishing( int picIndex, int turns = 1 )
@@ -195,18 +196,21 @@
 		{
 			_state.Value = RowState.Stopped;
 			_currentRelativeSpeed = 0;
-			_currentRelativeOffset = _finishTurns;
+			//_currentRelativeOffset = IndexToOffset( _targetIndex );
 			
 			SetRectPos();
 			UpdatePicsViews();
 		}
 
-		private void TweenSpeed( float duration, float newSpeed, Action onComplete = null )
+		private void TweenSpeed( float duration, float newSpeed, float delayBefore, Action onComplete = null )
 		{
+			var rndDelay = delayBefore <= 0.01f ? 0 : Random.Range( 0.01f, delayBefore );
+			
 			_tween?.Kill();
 			_tween = DOVirtual
 				.Float( _currentRelativeSpeed, newSpeed, duration, v => _currentRelativeSpeed = v )
 				.SetEase( Ease.InOutCubic )
+				.SetDelay( rndDelay )
 				.OnComplete( () =>
 				{
 					_tween = null;

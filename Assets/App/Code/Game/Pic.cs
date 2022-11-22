@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace App.Code.Game
@@ -43,7 +42,7 @@ namespace App.Code.Game
 
         private void SetBlurActiveState( float speed )
         {
-            Debug.Log( $"SetBlurActiveState {name}, threshol  {_speedThreshold}" );
+            //Debug.Log( $"SetBlurActiveState {name}, threshol  {_speedThreshold}" );
             
             var needBlur = speed >= _speedThreshold;
             var isBlurred = _blurred.gameObject.activeSelf;
@@ -78,20 +77,5 @@ namespace App.Code.Game
                 _tweens[i] = null;
             }
         }
-
-        /*private void SetBlurredState( float speed )
-        {
-            var blurredWeight = Mathf.InverseLerp( Speed1, Speed2, speed );
-            
-            //Debug.Log( $"{speed} => {blurredWeight}" );
-
-            var color1 = _normal.material.color;
-            color1.a = 1 - blurredWeight;
-            _normal.material.color = color1;
-
-            var color2 = _blurred.material.color;
-            color2.a = blurredWeight;
-            _blurred.material.color = color2;
-        }*/
     }
 }
