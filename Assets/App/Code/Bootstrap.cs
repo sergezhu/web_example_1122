@@ -8,6 +8,7 @@
 	public class Bootstrap : MonoBehaviour
 	{
 		[SerializeField] private GameView _gameView;
+		[SerializeField] private GameSettings _gameSettings;
 		[SerializeField] private WebView _webView;
 		[SerializeField] private GameObject _veil;
 
@@ -26,7 +27,7 @@
 			_remoteConfigLoader = new FirebaseRemoteConfigLoader();
 			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader );
 			_playerPrefsSystem = new PlayerPrefsSystem();
-			_gameService = new GameService( _gameView );
+			_gameService = new GameService( _gameView, _gameSettings );
 
 			#if UNITY_EDITOR
 			if( _clearPrefsWhenStart )
