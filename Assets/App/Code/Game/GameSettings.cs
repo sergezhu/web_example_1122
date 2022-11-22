@@ -9,9 +9,10 @@
 		public float MaxSpeed;
 		public float MinSpeed;
 		public float SpeedThreshold;
+		public float DelayBeforeStop;
 
 		[Space]
-		public int TargetIndex;
+		public int[] TargetIndex;
 		public int LoopsBeforeStop;
 	}
 }

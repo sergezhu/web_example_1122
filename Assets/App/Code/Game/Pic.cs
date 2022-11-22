@@ -16,10 +16,14 @@ namespace App.Code.Game
         private Material _material2;
         private float _speedThreshold;
 
+        private Tween[] _tweens;
+
         private void Awake()
         {
             _normal.material = new Material( _normal.material );
             _blurred.material = new Material( _blurred.material );
+
+            _tweens = new Tween[3];
         }
 
         public void Construct( float speedThreshold )
@@ -50,15 +54,28 @@ namespace App.Code.Game
 
             if ( needBlur )
             {
+                ClearTweens();
+                
                 _blurred.gameObject.SetActive( true );
-                _blurred.DOFade( 1, transitionDuration );
-                _normal.DOFade( 0, transitionDuration ).SetDelay( transitionDuration ).OnComplete( () => _normal.gameObject.SetActive( false ) );
+                _tweens[0] = _blurred.DOFade( 1, transitionDuration );
+                _tweens[1] = _normal.DOFade( 0, transitionDuration ).OnComplete( () => _normal.gameObject.SetActive( false ) );
             }
             else
             {
+                ClearTweens();
+                
                 _normal.gameObject.SetActive( true );
-                _normal.DOFade( 1, transitionDuration );
-                _blurred.DOFade( 0, transitionDuration ).SetDelay( transitionDuration ).OnComplete( () => _blurred.gameObject.SetActive( false ) );
+                _tweens[0] = _normal.DOFade( 1, transitionDuration );
+                _tweens[1] = _blurred.DOFade( 0, transitionDuration ).OnComplete( () => _blurred.gameObject.SetActive( false ) );
+            }
+        }
+
+        private void ClearTweens()
+        {
+            for ( var i = 0; i < _tweens.Length; i++ )
+            {
+                _tweens[i]?.Kill();
+                _tweens[i] = null;
             }
         }
 

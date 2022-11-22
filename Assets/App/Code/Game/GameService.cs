@@ -1,43 +1,57 @@
 ﻿namespace App.Code.Game
 {
+	using System.Collections;
+	using System.Linq;
 	using UniRx;
 	using UnityEngine;
 
-	public class GameService
+	public class GameService : MonoBehaviour
 	{
-		private readonly GameView _view;
-		private readonly GameSettings _settings;
-		private readonly CompositeDisposable _disposables;
+		private GameView _view;
+		private GameSettings _settings;
 
-		private bool _toggle;
-
-		public GameService(GameView view, GameSettings settings)
+		public void Construct(GameView view, GameSettings settings) 
 		{
 			_view = view;
 			_settings = settings;
-			_disposables = new CompositeDisposable();
-			
-			foreach ( var row in _view.Rows )
+
+			for ( var i = 0; i < _view.Rows.Count; i++ )
 			{
-				row.Construct( _settings );
+				var row = _view.Rows[i];
+				row.Construct( i, _settings );
 			}
 		}
 
-		public void Start()
+		private bool CanSpin => _view.Rows.All( row => row.CanSpin );
+
+		public void Run()
 		{
 			_view.SpinButtonClick
 				.Subscribe( _ => OnSpinButtonClick() )
-				.AddTo( _disposables );
+				.AddTo( this );
 		}
 
 		private void OnSpinButtonClick()
 		{
-			_toggle = !_toggle;
-			
-			if(_toggle)
-				StartSpin();
+			if ( CanSpin )
+			{
+				StartCoroutine( SpinAsync() );
+			}
 			else
-				StopSpin();
+			{
+				Debug.LogWarning( $"You can not spin now" );
+			}
+		}
+
+		private IEnumerator SpinAsync()
+		{
+			var delay = Mathf.Max( _settings.AccelerateDuration + 0.1f, _settings.DelayBeforeStop );
+			Debug.LogWarning( $"SPIN! delay : {delay}" );
+
+			StartSpin();
+
+			yield return new WaitForSeconds( delay );
+			StopSpin();
 		}
 
 		private void StartSpin()
@@ -50,9 +64,10 @@
 
 		private void StopSpin()
 		{
-			foreach ( var row in _view.Rows )
+			for ( var i = 0; i < _view.Rows.Count; i++ )
 			{
-				row.Brake( _settings.TargetIndex, _settings.DecelerateDuration, _settings.MinSpeed );
+				var row = _view.Rows[i];
+				row.Brake( _settings.TargetIndex[i], _settings.DecelerateDuration, _settings.MinSpeed );
 			}
 		}
 	}

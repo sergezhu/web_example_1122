@@ -18,7 +18,7 @@
 	public class Row : MonoBehaviour
 	{
 		private const int PicsVisible = 3;
-		private const int Total = 8;
+		private const int Total = 7;
 		
 		[SerializeField] private RectTransform _contentRect;
 		[SerializeField] private List<Pic> _pics;
@@ -29,16 +29,24 @@
 		private int _picIndex;
 		private float _size;
 		private Tween _tween;
+		private GameSettings _settings;
 
 		private readonly ReactiveProperty<RowState> _state = new(RowState.Stopped);
+
+		private int _id;
 		private int _finishTurns;
 		private float _speedThreshold;
-		private GameSettings _settings;
 		private bool _finishPicPassed;
+		private int _targetIndex;
+		public bool CanSpin { get; private set; }
 
 		private void Awake()
 		{
-			_state.Subscribe( v => Debug.Log( $"{name} : {v}" ) );
+			_state.Subscribe( v =>
+			{
+				CanSpin = v == RowState.Stopped;
+				Debug.Log( $"{name} : {v}" );
+			} );
 
 			Observable
 				.EveryUpdate()
@@ -48,8 +56,9 @@
 				.AddTo( this );
 		}
 
-		public void Construct(GameSettings settings)
+		public void Construct(int id, GameSettings settings)
 		{
+			_id = id;
 			_settings = settings;
 			_speedThreshold = _settings.SpeedThreshold;
 
@@ -79,7 +88,7 @@
 				{
 					var overIndex = OffsetToIndex( _contentRect.anchoredPosition.y );
 
-					if ( overIndex == _settings.TargetIndex && !_finishPicPassed )
+					if ( overIndex == _targetIndex && !_finishPicPassed )
 					{
 						if ( _finishTurns > 0 )
 							_finishTurns--;
@@ -109,7 +118,7 @@
 		[ContextMenu("SetIndex")]
 		private void SetIndex()
 		{
-			var index = _settings.TargetIndex;
+			var index = _settings.TargetIndex[_id];
 			_currentRelativeOffset = (float) index / Total;
 			SetRectPos();
 		}
@@ -156,6 +165,7 @@
 		private void Finishing( int picIndex, int turns = 1 )
 		{
 			_state.Value = RowState.Finishing;
+			_targetIndex = picIndex;
 			
 			//var offset = (float) picIndex / Total;
 			var offset = IndexToRelativeOffset( picIndex );

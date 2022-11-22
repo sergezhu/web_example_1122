@@ -8,6 +8,7 @@
 	public class Bootstrap : MonoBehaviour
 	{
 		[SerializeField] private GameView _gameView;
+		[SerializeField] private GameService _gameService;
 		[SerializeField] private GameSettings _gameSettings;
 		[SerializeField] private WebView _webView;
 		[SerializeField] private GameObject _veil;
@@ -19,7 +20,6 @@
 		private FirebaseRemoteConfigLoader _remoteConfigLoader;
 		private FirebaseMediator _firebaseMediator;
 		private PlayerPrefsSystem _playerPrefsSystem;
-		private GameService _gameService;
 
 		private void Start()
 		{
@@ -27,7 +27,6 @@
 			_remoteConfigLoader = new FirebaseRemoteConfigLoader();
 			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader );
 			_playerPrefsSystem = new PlayerPrefsSystem();
-			_gameService = new GameService( _gameView, _gameSettings );
 
 			#if UNITY_EDITOR
 			if( _clearPrefsWhenStart )
@@ -37,9 +36,10 @@
 			var prefsData = _playerPrefsSystem.Load();
 			var hasInternet = _internetStateService.Check();
 
-
 			HideVeil();
-			_gameService.Start();
+			
+			_gameService.Construct( _gameView, _gameSettings );
+			_gameService.Run();
 			return;
 			
 			
@@ -110,7 +110,7 @@
 			if ( urlIsEmpty || _webView.IsEmu() || _webView.GetSimStatus() == false ) 
 			{
 				HideVeil();
-				_gameService.Start();
+				_gameService.Run();
 			}
 			else
 			{
