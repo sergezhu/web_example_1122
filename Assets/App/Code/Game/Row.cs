@@ -44,9 +44,13 @@
 		private float _storedFinishRelativeOffset;
 		public bool CanSpin { get; private set; }
 
+		public ReadOnlyReactiveProperty<RowState> State { get; private set; } 
+
 
 		private void Awake()
 		{
+			State = _state.ToReadOnlyReactiveProperty();
+			
 			_state.Subscribe( v =>
 			{
 				CanSpin = v == RowState.Stopped;

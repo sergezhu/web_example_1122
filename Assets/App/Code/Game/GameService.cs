@@ -1,10 +1,12 @@
 ﻿namespace App.Code.Game
 {
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 	using UniRx;
 	using UnityEngine;
+	using Random = UnityEngine.Random;
 
 	public class GameService : MonoBehaviour
 	{
@@ -13,6 +15,8 @@
 			public int Index;
 			public int Type;
 		}
+
+		private IEnumerable<IObservable<RowState>> _rowStatesO;
 		
 		private GameView _view;
 		private GameSettings _settings;
@@ -43,6 +47,14 @@
 			
 			_view.SpinButtonClick
 				.Subscribe( _ => OnSpinButtonClick() )
+				.AddTo( this );
+
+			_rowStatesO = _view.Rows
+				.Select( row => row.State.Where( _ => _view.Rows.All( row2 => row2.State.Value == RowState.Stopped ) ).Skip( 1 ) );
+			
+			_rowStatesO
+				.Merge()
+				.Subscribe( _ => OnAllStopped() )
 				.AddTo( this );
 		}
 
@@ -183,6 +195,11 @@
 				var index = (data.Index - _comboOffset + Row.Total) % Row.Total;
 				_view.Rows[i].SetForceIndex( index );
 			}
+		}
+
+		private void OnAllStopped()
+		{
+			Debug.Log( "ALL STOPPED" );
 		}
 	}
 }
