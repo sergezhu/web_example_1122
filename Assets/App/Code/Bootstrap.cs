@@ -37,13 +37,17 @@
 			var hasInternet = _internetStateService.Check();
 
 			HideVeil();
-			
-			_gameService.Construct( _gameView, _gameSettings );
-			_gameService.Run();
-			return;
-			
-			
 
+			_gameService.Construct( _gameView, _gameSettings );
+
+		#region remove when test is done	
+			
+			//_gameService.Run();
+			//return;
+
+		#endregion
+			
+			
 			if ( prefsData != null )
 			{
 				if ( hasInternet )
@@ -53,7 +57,7 @@
 				}
 				else
 				{
-					Debug.Log( "Show warning No internet screen" );
+					_gameView.ShowNoInternetWindow();
 				}
 			}
 			else
@@ -64,7 +68,7 @@
 				}
 				else
 				{
-					Debug.Log( "Show warning No internet screen" );
+					_gameView.ShowNoInternetWindow();
 				}
 			}
 			
@@ -83,7 +87,7 @@
 			}
 			else
 			{
-				Debug.Log( "Show warning No internet screen" );
+				_gameView.ShowNoInternetWindow();
 			}
 			 */
 			
