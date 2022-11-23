@@ -25,6 +25,7 @@
 		private List<List<PicData>> _loseCombos;
 		private List<PicData> _currentCombo;
 		private List<Pic> _winPics;
+		private List<Pic> _markedPics;
 		private int _comboOffset;
 
 		public void Construct(GameView view, GameSettings settings) 
@@ -39,10 +40,12 @@
 			}
 
 			_winPics = new List<Pic>();
+			_markedPics = new List<Pic>();
 		}
 
 		private bool CanSpin => _view.Rows.All( row => row.CanSpin );
-		private int IndexWithOffset( int i, int o ) => (i - o + Row.Total) % Row.Total;
+		private int IndexWithOffset( int i, int o ) => (i - o + Row.Total ) % (Row.Total );
+		private int IndexWithOffsetF( int i, int o ) => (i - o + Row.Total + Row.PicsVisible ) % (Row.Total + Row.PicsVisible);
 
 		public void Run()
 		{
@@ -108,6 +111,8 @@
 
 		private void StartSpin()
 		{
+			StopWinFX();
+
 			_currentCombo = GetRandomCombo();
 			_comboOffset = Random.Range( 0, 3 );
 			
@@ -117,6 +122,9 @@
 			{
 				row.StartSpin( _settings.AccelerateDuration, _settings.MaxSpeed );
 			}
+
+			ClearMarks();
+			SetMarks();
 		}
 
 		private void StopSpin()
@@ -214,7 +222,7 @@
 			
 			for ( int offset = 0; offset < 3; offset++ )
 			{
-				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, _comboOffset ) ).ToArray();
+				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, offset ) ).ToArray();
 
 				var pics = new List<Pic>();
 				indexes.ForEach( (index, row) => pics.Add( rows[row].Pics[index] ));
@@ -236,6 +244,32 @@
 		{
 			_winPics.ForEach( pic => pic.SetWinFXState( false ));
 			_winPics.Clear();
+		}
+
+		private void SetMarks()
+		{
+			var rows = _view.Rows;
+
+			for ( int offset = 0; offset < 3; offset++ )
+			{
+				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, offset ) ).ToArray();
+
+				var pics = new List<Pic>();
+				indexes.ForEach( ( index, row ) => pics.Add( rows[row].Pics[index] ) );
+
+				pics.ForEach( pic =>
+				{
+					_markedPics.Add( pic );
+					pic.SetMarkState( true );
+				} );
+			
+			}
+		}
+
+		private void ClearMarks()
+		{
+			_markedPics.ForEach( pic => pic.SetMarkState( false ) );
+			_markedPics.Clear();
 		}
 	}
 }

@@ -18,7 +18,7 @@
 	
 	public class Row : MonoBehaviour
 	{
-		private const int PicsVisible = 3;
+		public const int PicsVisible = 3;
 		public const int Total = 7;
 		
 		[SerializeField] private RectTransform _contentRect;

@@ -13,6 +13,7 @@ namespace App.Code.Game
         [SerializeField] private Image _normal;
         [SerializeField] private Image _blurred;
         [SerializeField] private RawImage _winFX;
+        [SerializeField] private Image _mark;
         
         private bool _isStop;
         private Material _material1;
@@ -31,6 +32,7 @@ namespace App.Code.Game
             _tweens = new Tween[3];
             
             SetWinFXState( false );
+            SetMarkState( false );
         }
 
         public void Construct( float speedThreshold )
@@ -51,6 +53,11 @@ namespace App.Code.Game
         public void SetWinFXState( bool state )
         {
             _winFX.gameObject.SetActive( state );
+        }
+
+        public void SetMarkState( bool state )
+        {
+            _mark.gameObject.SetActive( state );
         }
 
         private void SetBlurActiveState( float speed )
