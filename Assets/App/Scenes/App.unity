@@ -3243,6 +3243,7 @@ MonoBehaviour:
   RandomDelayBeforeStart: 1
   TargetIndex: 020000000200000003000000
   LoopsBeforeStop: 1
+  RewardChance: 0.5
 --- !u!114 &1723135656
 MonoBehaviour:
   m_ObjectHideFlags: 0

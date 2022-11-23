@@ -11,9 +11,10 @@
 		public float SpeedThreshold;
 		public float DelayBeforeStop;
 		public float RandomDelayBeforeStart;
-
-		[Space]
-		public int[] TargetIndex;
 		public int LoopsBeforeStop;
+
+		[Header( "Random Tune" )]
+		[Range(0, 1)]
+		public float WinChance;
 	}
 }

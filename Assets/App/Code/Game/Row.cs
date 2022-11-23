@@ -19,7 +19,7 @@
 	public class Row : MonoBehaviour
 	{
 		private const int PicsVisible = 3;
-		private const int Total = 7;
+		public const int Total = 7;
 		
 		[SerializeField] private RectTransform _contentRect;
 		[SerializeField] private List<Pic> _pics;
@@ -33,13 +33,15 @@
 		private GameSettings _settings;
 
 		private readonly ReactiveProperty<RowState> _state = new(RowState.Stopped);
+		public IReadOnlyList<Pic> Pics => _pics;
 
-		private int _id;
+		private int _rowIndex;
 		private int _finishTurns;
 		private float _speedThreshold;
 		private bool _finishPicPassed;
 		private int _targetIndex;
 		public bool CanSpin { get; private set; }
+
 
 		private void Awake()
 		{
@@ -59,7 +61,7 @@
 
 		public void Construct(int id, GameSettings settings)
 		{
-			_id = id;
+			_rowIndex = id;
 			_settings = settings;
 			_speedThreshold = _settings.SpeedThreshold;
 
@@ -114,14 +116,6 @@
 
 				//Debug.Log( $"offset = {_currentRelativeOffset}, speed = {_currentRelativeSpeed}" );
 			}
-		}
-
-		[ContextMenu("SetIndex")]
-		private void SetIndex()
-		{
-			var index = _settings.TargetIndex[_id];
-			_currentRelativeOffset = (float) index / Total;
-			SetRectPos();
 		}
 
 		private float IndexToOffset( int index )
