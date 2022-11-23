@@ -15,6 +15,7 @@
 
 		[Header( "Debug" )]
 		[SerializeField] private bool _clearPrefsWhenStart;
+		[SerializeField] private bool _forceGameStart;
 		
 		private InternetStateService _internetStateService;
 		private FirebaseRemoteConfigLoader _remoteConfigLoader;
@@ -38,16 +39,15 @@
 
 			HideVeil();
 
+			_gameView.Init();
 			_gameService.Construct( _gameView, _gameSettings );
 
-		#region remove when test is done	
-			
-			//_gameService.Run();
-			//return;
+			if ( _forceGameStart )
+			{
+				_gameService.Run();
+				return;
+			}
 
-		#endregion
-			
-			
 			if ( prefsData != null )
 			{
 				if ( hasInternet )

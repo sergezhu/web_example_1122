@@ -19,20 +19,16 @@
 
 		public IObservable<Unit> SpinButtonClick { get; private set; }
 		public IReadOnlyList<Row> Rows => _rows;
-		
 
-		private void Awake()
+
+		public override void Init()
 		{
 			Hide();
-			
+
 			SpinButtonClick = _spinButton.onClick.AsObservable();
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
-		}
-
-		public override void Init()
-		{
 		}
 
 		public void ShowNoInternetWindow() => _noInternetWarningWindow.Show();
