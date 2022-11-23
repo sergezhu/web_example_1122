@@ -12,6 +12,7 @@ namespace App.Code.Game
         [Space]
         [SerializeField] private Image _normal;
         [SerializeField] private Image _blurred;
+        [SerializeField] private RawImage _winFX;
         
         private bool _isStop;
         private Material _material1;
@@ -28,6 +29,8 @@ namespace App.Code.Game
             _blurred.material = new Material( _blurred.material );
 
             _tweens = new Tween[3];
+            
+            SetWinFXState( false );
         }
 
         public void Construct( float speedThreshold )
@@ -43,6 +46,11 @@ namespace App.Code.Game
 
             if ( !_isStop ) 
                 SetBlurActiveState( speed );
+        }
+
+        public void SetWinFXState( bool state )
+        {
+            _winFX.gameObject.SetActive( state );
         }
 
         private void SetBlurActiveState( float speed )

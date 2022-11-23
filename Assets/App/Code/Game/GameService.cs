@@ -4,6 +4,7 @@
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
+	using App.Code.Utils;
 	using UniRx;
 	using UnityEngine;
 	using Random = UnityEngine.Random;
@@ -23,6 +24,7 @@
 		private List<List<PicData>> _winCombos;
 		private List<List<PicData>> _loseCombos;
 		private List<PicData> _currentCombo;
+		private List<Pic> _winPics;
 		private int _comboOffset;
 
 		public void Construct(GameView view, GameSettings settings) 
@@ -35,9 +37,12 @@
 				var row = _view.Rows[i];
 				row.Construct( i, _settings );
 			}
+
+			_winPics = new List<Pic>();
 		}
 
 		private bool CanSpin => _view.Rows.All( row => row.CanSpin );
+		private int IndexWithOffset( int i, int o ) => (i - o + Row.Total) % Row.Total;
 
 		public void Run()
 		{
@@ -117,7 +122,7 @@
 		private void StopSpin()
 		{
 			//var indexes = _currentCombo.Select( combo => combo.Index).ToArray();
-			var indexes = _currentCombo.Select( combo => (combo.Index - _comboOffset + Row.Total) % Row.Total).ToArray();
+			var indexes = _currentCombo.Select( combo => IndexWithOffset( combo.Index, _comboOffset ) ).ToArray();
 
 			for ( var i = 0; i < _view.Rows.Count; i++ )
 			{
@@ -192,7 +197,7 @@
 			for ( var i = 0; i < _currentCombo.Count; i++ )
 			{
 				var data = _currentCombo[i];
-				var index = (data.Index - _comboOffset + Row.Total) % Row.Total;
+				var index = IndexWithOffset( data.Index, _comboOffset);
 				_view.Rows[i].SetForceIndex( index );
 			}
 		}
@@ -200,6 +205,37 @@
 		private void OnAllStopped()
 		{
 			Debug.Log( "ALL STOPPED" );
+			CheckIfWinAndPlayFX();
+		}
+
+		private void CheckIfWinAndPlayFX()
+		{
+			var rows = _view.Rows;
+			
+			for ( int offset = 0; offset < 3; offset++ )
+			{
+				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, _comboOffset ) ).ToArray();
+
+				var pics = new List<Pic>();
+				indexes.ForEach( (index, row) => pics.Add( rows[row].Pics[index] ));
+
+				var isWin = pics.All( pic => pic.ID == pics[0].ID );
+
+				if ( isWin )
+				{
+					pics.ForEach( pic =>
+					{
+						_winPics.Add( pic );
+						pic.SetWinFXState( true );
+					} );
+				}
+			}
+		}
+
+		private void StopWinFX()
+		{
+			_winPics.ForEach( pic => pic.SetWinFXState( false ));
+			_winPics.Clear();
 		}
 	}
 }
