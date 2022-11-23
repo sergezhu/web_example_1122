@@ -7,6 +7,9 @@ namespace App.Code.Game
 
     public class Pic : MonoBehaviour
     {
+        [SerializeField] private int _id;
+        
+        [Space]
         [SerializeField] private Image _normal;
         [SerializeField] private Image _blurred;
         
@@ -16,6 +19,8 @@ namespace App.Code.Game
         private float _speedThreshold;
 
         private Tween[] _tweens;
+
+        public int ID => _id;
 
         private void Awake()
         {

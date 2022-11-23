@@ -3120,7 +3120,7 @@ MonoBehaviour:
   _webView: {fileID: 1910971721}
   _veil: {fileID: 302874775}
   _clearPrefsWhenStart: 1
-  _forceGameStart: 1
+  _forceGameStart: 0
 --- !u!4 &1368453158
 Transform:
   m_ObjectHideFlags: 0
