@@ -62,14 +62,7 @@
 			}
 			else
 			{
-				if ( hasInternet )
-				{
-					StartCoroutine( WaitInitialization() );
-				}
-				else
-				{
-					_gameView.ShowNoInternetWindow();
-				}
+				StartCoroutine( WaitInitialization() );
 			}
 			
 			/*
@@ -96,6 +89,7 @@
 		private IEnumerator WaitInitialization()
 		{
 			_firebaseMediator.Initialize();
+
 			var waiter = new WaitForSeconds( 0.1f );
 			
 			while ( _remoteConfigLoader.FbStatus != FirebaseRemoteConfigLoader.FirebaseStatus.IsReady )

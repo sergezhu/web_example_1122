@@ -1,5 +1,6 @@
 ﻿namespace App.Code
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Runtime.CompilerServices;
 	using System.Threading.Tasks;
@@ -35,19 +36,26 @@
 
 		private void InitializeInternal()
 		{
-			FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith( task =>
+			try
 			{
-				var dependencyStatus = task.Result;
-				if ( dependencyStatus == DependencyStatus.Available )
+				FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith( task =>
 				{
-					SetDefaults();
-					Debug.Log( "Firebase Initialized" );
-				}
-				else
-				{
-					Debug.LogError( $"Could not resolve all Firebase dependencies: {dependencyStatus}" );
-				}
-			} );
+					var dependencyStatus = task.Result;
+					if ( dependencyStatus == DependencyStatus.Available )
+					{
+						SetDefaults();
+						Debug.Log( "Firebase Initialized" );
+					}
+					else
+					{
+						Debug.LogError( $"Could not resolve all Firebase dependencies: {dependencyStatus}" );
+					}
+				} );
+			}
+			catch ( Exception ex )
+			{
+				Debug.LogError( $"Firebase Initialize Exception : {ex.Message}" );
+			}
 		}
 
 		private void SetDefaults()

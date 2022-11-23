@@ -7,7 +7,7 @@
 	using UnityEngine;
 	using UnityEngine.UI;
 
-	public class GameView : MonoBehaviour
+	public class GameView : BaseUIWindow
 	{
 		[SerializeField] private UINoInternetWarningWindow _noInternetWarningWindow;
 		
@@ -23,13 +23,20 @@
 
 		private void Awake()
 		{
+			Hide();
+			
 			SpinButtonClick = _spinButton.onClick.AsObservable();
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
 		}
 
+		public override void Init()
+		{
+		}
+
 		public void ShowNoInternetWindow() => _noInternetWarningWindow.Show();
 		public void HideNoInternetWindow() => _noInternetWarningWindow.Hide();
+		
 	}
 }

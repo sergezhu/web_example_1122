@@ -26,6 +26,8 @@
 
 		public void Run()
 		{
+			_view.Show();
+			
 			_view.SpinButtonClick
 				.Subscribe( _ => OnSpinButtonClick() )
 				.AddTo( this );
