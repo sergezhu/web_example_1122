@@ -110,7 +110,7 @@
 			for ( var i = 0; i < _view.Rows.Count; i++ )
 			{
 				var row = _view.Rows[i];
-				row.Brake( indexes[i], _settings.DecelerateDuration, _settings.MinSpeed );
+				row.Brake( indexes[i], _settings.DecelerateDuration, _settings.MaxFinishingSpeed );
 			}
 		}
 

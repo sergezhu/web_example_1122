@@ -3237,7 +3237,8 @@ MonoBehaviour:
   AccelerateDuration: 3
   DecelerateDuration: 1.5
   MaxSpeed: 1
-  MinSpeed: 0.1
+  MinFinishingSpeed: 0.1
+  MaxFinishingSpeed: 0.25
   SpeedThreshold: 0.8
   DelayBeforeStop: 5
   RandomDelayBeforeStart: 1

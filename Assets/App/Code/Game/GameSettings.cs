@@ -7,7 +7,8 @@
 		public float AccelerateDuration;
 		public float DecelerateDuration;
 		public float MaxSpeed;
-		public float MinSpeed;
+		public float MinFinishingSpeed;
+		public float MaxFinishingSpeed;
 		public float SpeedThreshold;
 		public float DelayBeforeStop;
 		public float RandomDelayBeforeStart;

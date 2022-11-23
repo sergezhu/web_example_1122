@@ -40,6 +40,8 @@
 		private float _speedThreshold;
 		private bool _finishPicPassed;
 		private int _targetIndex;
+		private float _finishRelativeOffset;
+		private float _storedFinishRelativeOffset;
 		public bool CanSpin { get; private set; }
 
 
@@ -89,21 +91,13 @@
 
 				if ( _state.Value == RowState.Finishing )
 				{
-					var overIndex = OffsetToIndex( _contentRect.anchoredPosition.y );
+					_finishRelativeOffset -= delta;
 
-					if ( overIndex == _targetIndex && !_finishPicPassed )
-					{
-						if ( _finishTurns > 0 )
-							_finishTurns--;
-						else
-							FullStop();
+					if ( _finishRelativeOffset <= 0 ) 
+						FullStop();
 
-						_finishPicPassed = true;
-					}
-					else
-					{
-						_finishPicPassed = false;
-					}
+					var t = _finishRelativeOffset / _storedFinishRelativeOffset;
+					_currentRelativeSpeed = Mathf.Lerp( _settings.MinFinishingSpeed, _settings.MaxFinishingSpeed, t );
 				}
 			}
 
@@ -159,46 +153,29 @@
 			if ( _state.Value != RowState.Accelerate && _state.Value != RowState.MaxSpeed )
 				return;
 
+			_targetIndex = picIndex;
 			_state.Value = RowState.Decelerate;
-			TweenSpeed( duration, targetMinSpeed, 0, () => Finishing( picIndex, _settings.LoopsBeforeStop ) );
+			TweenSpeed( duration, targetMinSpeed, 0, () => Finishing( _settings.LoopsBeforeStop ) );
 		}
 
-		private void Finishing( int picIndex, int turns = 1 )
+		private void Finishing( int turns = 1 )
 		{
 			_state.Value = RowState.Finishing;
-			_targetIndex = picIndex;
-			
-			//var offset = (float) picIndex / Total;
-			var offset = IndexToRelativeOffset( picIndex );
+
+			var offset = IndexToRelativeOffset( _targetIndex );
 			_finishTurns = _currentRelativeOffset < offset ? turns + 1 : turns;
+			_finishRelativeOffset = offset + _finishTurns - _currentRelativeOffset;
+			_storedFinishRelativeOffset = _finishRelativeOffset;
 
 			Debug.Log( $"Finishing : curOf {_currentRelativeOffset}, curSp {_currentRelativeSpeed}, turns : {_finishTurns}" );
-			
-			/*var duration = (_finishRelativeOffset - _currentRelativeOffset) / _currentRelativeSpeed;
-			
-			_tween = DOVirtual
-				.Float( _currentRelativeOffset, _finishRelativeOffset, duration, v =>
-				{
-					_currentRelativeSpeed = (v - _currentRelativeOffset) / Time.deltaTime;
-					_currentRelativeOffset = v;
-				} )
-				.SetEase( Ease.Linear )
-				.OnComplete( () =>
-				{
-					_tween = null;
-					_state.Value = RowState.Stopped;
-					_currentRelativeSpeed = 0;
-					UpdatePicsViews( _currentRelativeSpeed );
-				} );*/
 		}
 
 		private void FullStop()
 		{
 			_state.Value = RowState.Stopped;
 			_currentRelativeSpeed = 0;
-			//_currentRelativeOffset = IndexToOffset( _targetIndex );
-			
-			SetRectPos();
+
+			SetForceIndex( _targetIndex );
 			UpdatePicsViews();
 		}
 
