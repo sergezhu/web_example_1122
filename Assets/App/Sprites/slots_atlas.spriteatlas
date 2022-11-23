@@ -45,6 +45,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5fec204303c536846846a5c669da64d6, type: 3}
   - {fileID: 21300000, guid: 699b97539b2315e4795fbfd0219695e2, type: 3}
   - {fileID: 21300000, guid: 19aa63b4c9d2f654db9b6a9c42969ebc, type: 3}
+  - {fileID: 21300000, guid: 8ff92c4599c210146b5acd5fff29f856, type: 3}
   - {fileID: 21300000, guid: 0af1cb85bae6a4248be19d066ada7279, type: 3}
   - {fileID: 21300000, guid: 3c506b681f3975f43927347cb2d02906, type: 3}
   - {fileID: 21300000, guid: 886590b89ee08cc4b875fa10f86c4216, type: 3}
@@ -66,6 +67,7 @@ SpriteAtlas:
   - pic06_blur
   - pic03
   - pic07
+  - glow
   - pic07_blur
   - pic02
   - pic06
