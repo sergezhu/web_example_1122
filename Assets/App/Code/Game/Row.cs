@@ -118,6 +118,12 @@
 			}
 		}
 
+		public void SetForceIndex(int index)
+		{
+			_currentRelativeOffset = (float) index / Total;
+			SetRectPos();
+		}
+
 		private float IndexToOffset( int index )
 		{
 			return IndexToRelativeOffset(index) * _size;

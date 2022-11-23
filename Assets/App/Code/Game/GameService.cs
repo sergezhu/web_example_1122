@@ -19,6 +19,7 @@
 		private List<List<PicData>> _winCombos;
 		private List<List<PicData>> _loseCombos;
 		private List<PicData> _currentCombo;
+		private int _comboOffset;
 
 		public void Construct(GameView view, GameSettings settings) 
 		{
@@ -48,7 +49,7 @@
 		public List<PicData> GetRandomCombo()
 		{
 			var rnd = Random.Range( 0f, 1f );
-			var isWin = rnd >= _settings.WinChance;
+			var isWin = rnd <= _settings.WinChance;
 
 			var combos = isWin ? _winCombos : _loseCombos;
 			var index = Random.Range( 0, combos.Count );
@@ -91,6 +92,9 @@
 		private void StartSpin()
 		{
 			_currentCombo = GetRandomCombo();
+			_comboOffset = Random.Range( 0, 3 );
+			
+			_currentCombo.ForEach( c => Debug.Log( $"{c.Index}:{c.Type}" ) );
 			
 			foreach ( var row in _view.Rows )
 			{
@@ -100,8 +104,9 @@
 
 		private void StopSpin()
 		{
-			var indexes = _currentCombo.Select( combo => combo.Index ).ToArray();
-			
+			//var indexes = _currentCombo.Select( combo => combo.Index).ToArray();
+			var indexes = _currentCombo.Select( combo => (combo.Index - _comboOffset + Row.Total) % Row.Total).ToArray();
+
 			for ( var i = 0; i < _view.Rows.Count; i++ )
 			{
 				var row = _view.Rows[i];
@@ -166,6 +171,17 @@
 			PicData RowLineFunc( int row, int line )
 			{
 				return new() {Index = line, Type = rowArray[row].Pics[line].ID};
+			}
+		}
+
+		[ContextMenu("Set Force Indexes")]
+		private void SetForceIndexes()
+		{
+			for ( var i = 0; i < _currentCombo.Count; i++ )
+			{
+				var data = _currentCombo[i];
+				var index = (data.Index - _comboOffset + Row.Total) % Row.Total;
+				_view.Rows[i].SetForceIndex( index );
 			}
 		}
 	}

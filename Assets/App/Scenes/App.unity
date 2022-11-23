@@ -3237,13 +3237,12 @@ MonoBehaviour:
   AccelerateDuration: 3
   DecelerateDuration: 1.5
   MaxSpeed: 1
-  MinSpeed: 0.05
+  MinSpeed: 0.1
   SpeedThreshold: 0.8
   DelayBeforeStop: 5
   RandomDelayBeforeStart: 1
-  TargetIndex: 020000000200000003000000
   LoopsBeforeStop: 1
-  RewardChance: 0.5
+  WinChance: 1
 --- !u!114 &1723135656
 MonoBehaviour:
   m_ObjectHideFlags: 0
