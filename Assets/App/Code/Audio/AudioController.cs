@@ -46,6 +46,10 @@
 			_gameService.SpinStarted
 				.Subscribe( _ => PlaySpin() )
 				.AddTo( _disposables );
+
+			_gameService.AnyRowTurnPassed
+				.Subscribe( _ => PlayClick() )
+				.AddTo( _disposables );
 		}
 
 		private void PlayBGMusic()
@@ -62,22 +66,22 @@
 
 		private void PlaySpin()
 		{
-			_lib.Spin?.Play();
+			_lib.Spin.Play();
 		}
 
 		private void PlayRewardCoins()
 		{
-			_lib.RewardCoins?.Play();
+			_lib.RewardCoins.Play();
 		}
 
 		private void PlayRewardMusic()
 		{
-			_lib.RewardMusic?.Play();
+			_lib.RewardMusic.Play();
 		}
 
-		private void PlayButtonClick()
+		private void PlayClick()
 		{
-			_lib.ButtonsClick?.Play();
+			_lib.Click.Play();
 		}
 	}
 }

@@ -8,6 +8,6 @@
 		public AudioSource Spin;
 		public AudioSource RewardCoins;
 		public AudioSource RewardMusic;
-		public AudioSource ButtonsClick;
+		public AudioSource Click;
 	}
 }

@@ -33,6 +33,7 @@
 		public ReactiveCommand StopWithLose { get; } = new();
 		public ReactiveCommand SpinStarted { get; } = new();
 		public ReactiveCommand GameStarted { get; } = new();
+		public ReactiveCommand AnyRowTurnPassed { get; } = new();
 
 		public void Construct(GameView view, GameSettings settings) 
 		{
@@ -69,6 +70,12 @@
 			_rowStatesO
 				.Merge()
 				.Subscribe( _ => OnAllStopped() )
+				.AddTo( this );
+
+			_view.Rows
+				.Select( row => row.TurnPassed )
+				.Merge()
+				.Subscribe(_ => AnyRowTurnPassed.Execute())
 				.AddTo( this );
 
 			GameStarted.Execute();
@@ -109,7 +116,7 @@
 		private IEnumerator SpinAsync()
 		{
 			var delay = Mathf.Max( _settings.AccelerateDuration + 0.1f, _settings.DelayBeforeStop );
-			Debug.LogWarning( $"SPIN! delay : {delay}" );
+			Debug.LogWarning( $"SPIN! delay : {delay}, isWin : {_isWin}" );
 
 			StartSpin();
 

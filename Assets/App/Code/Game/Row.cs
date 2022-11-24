@@ -42,8 +42,9 @@
 		private int _targetIndex;
 		private float _finishRelativeOffset;
 		private float _storedFinishRelativeOffset;
+		
 		public bool CanSpin { get; private set; }
-
+		public ReactiveCommand TurnPassed { get; } = new();
 		public ReadOnlyReactiveProperty<RowState> State { get; private set; } 
 
 
@@ -54,7 +55,7 @@
 			_state.Subscribe( v =>
 			{
 				CanSpin = v == RowState.Stopped;
-				Debug.Log( $"{name} : {v}" );
+				//Debug.Log( $"{name} : {v}" );
 			} );
 
 			Observable
@@ -107,12 +108,14 @@
 
 			if ( _state.Value != RowState.Stopped )
 			{
-				_currentRelativeOffset -= (int) _currentRelativeOffset;
+				var intPart = (int) _currentRelativeOffset;
+				_currentRelativeOffset -= intPart;
+
+				if ( intPart > 0 ) 
+					TurnPassed.Execute();
 
 				SetRectPos();
 				UpdatePicsViews();
-
-				//Debug.Log( $"offset = {_currentRelativeOffset}, speed = {_currentRelativeSpeed}" );
 			}
 		}
 
