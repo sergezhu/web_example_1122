@@ -1,6 +1,7 @@
 ﻿namespace App.Code
 {
 	using System.Collections;
+	using App.Code.Audio;
 	using App.Code.Game;
 	using App.Code.Loader;
 	using UnityEngine;
@@ -10,6 +11,7 @@
 		[SerializeField] private GameView _gameView;
 		[SerializeField] private GameService _gameService;
 		[SerializeField] private GameSettings _gameSettings;
+		[SerializeField] private AudioLibrary _audioLibrary;
 		[SerializeField] private WebView _webView;
 		[SerializeField] private GameObject _veil;
 
@@ -21,6 +23,7 @@
 		private FirebaseRemoteConfigLoader _remoteConfigLoader;
 		private FirebaseMediator _firebaseMediator;
 		private PlayerPrefsSystem _playerPrefsSystem;
+		private AudioController _audioController;
 
 		private void Start()
 		{
@@ -28,6 +31,7 @@
 			_remoteConfigLoader = new FirebaseRemoteConfigLoader();
 			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader );
 			_playerPrefsSystem = new PlayerPrefsSystem();
+			_audioController = new AudioController( _audioLibrary, _gameService );
 
 			#if UNITY_EDITOR
 			if( _clearPrefsWhenStart )

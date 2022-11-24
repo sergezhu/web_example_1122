@@ -28,6 +28,11 @@
 		private List<Pic> _markedPics;
 		private int _comboOffset;
 
+		public ReactiveCommand StopWithWin { get; } = new();
+		public ReactiveCommand StopWithLose { get; } = new();
+		public ReactiveCommand SpinStarted { get; } = new();
+		public ReactiveCommand GameStarted { get; } = new();
+
 		public void Construct(GameView view, GameSettings settings) 
 		{
 			_view = view;
