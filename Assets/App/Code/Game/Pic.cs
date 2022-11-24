@@ -66,7 +66,6 @@ namespace App.Code.Game
             
             var needBlur = speed >= _speedThreshold;
             var isBlurred = _blurred.gameObject.activeSelf;
-            var transitionDuration = 2f * Mathf.Min(speed, 2f);
             
             if ( isBlurred == needBlur )
                 return;
@@ -76,16 +75,16 @@ namespace App.Code.Game
                 ClearTweens();
                 
                 _blurred.gameObject.SetActive( true );
-                _tweens[0] = _blurred.DOFade( 1, transitionDuration );
-                _tweens[1] = _normal.DOFade( 0, transitionDuration ).OnComplete( () => _normal.gameObject.SetActive( false ) );
+                _tweens[0] = _blurred.DOFade( 1, 1.5f );
+                _tweens[1] = _normal.DOFade( 0, 1f ).OnComplete( () => _normal.gameObject.SetActive( false ) );
             }
             else
             {
                 ClearTweens();
                 
                 _normal.gameObject.SetActive( true );
-                _tweens[0] = _normal.DOFade( 1, transitionDuration );
-                _tweens[1] = _blurred.DOFade( 0, transitionDuration ).OnComplete( () => _blurred.gameObject.SetActive( false ) );
+                _tweens[0] = _normal.DOFade( 1, 0.25f );
+                _tweens[1] = _blurred.DOFade( 0, 0.5f ).OnComplete( () => _blurred.gameObject.SetActive( false ) );
             }
         }
 
