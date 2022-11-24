@@ -274,6 +274,9 @@
 						_winPics.Add( pic );
 						pic.SetWinFXState( true );
 					} );
+					
+					Debug.LogWarning( $"IsWin is TRUE but expected FALSE" );
+					_isWin = true;
 				}
 			}
 		}

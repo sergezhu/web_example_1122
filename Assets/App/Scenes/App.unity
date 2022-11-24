@@ -4108,7 +4108,7 @@ MonoBehaviour:
   DelayBeforeStop: 5
   RandomDelayBeforeStart: 1
   LoopsBeforeStop: 1
-  WinChance: 0.3
+  WinChance: 0.5
   EnableMarks: 0
 --- !u!114 &1723135656
 MonoBehaviour:
