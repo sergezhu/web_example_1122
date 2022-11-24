@@ -27,6 +27,7 @@
 		private List<Pic> _winPics;
 		private List<Pic> _markedPics;
 		private int _comboOffset;
+		private bool _isWin;
 
 		public ReactiveCommand StopWithWin { get; } = new();
 		public ReactiveCommand StopWithLose { get; } = new();
@@ -69,14 +70,16 @@
 				.Merge()
 				.Subscribe( _ => OnAllStopped() )
 				.AddTo( this );
+
+			GameStarted.Execute();
 		}
 
 		public List<PicData> GetRandomCombo()
 		{
 			var rnd = Random.Range( 0f, 1f );
-			var isWin = rnd <= _settings.WinChance;
+			_isWin = rnd <= _settings.WinChance;
 
-			var combos = isWin ? _winCombos : _loseCombos;
+			var combos = _isWin ? _winCombos : _loseCombos;
 			var index = Random.Range( 0, combos.Count );
 			return combos[index];
 		}
@@ -133,6 +136,8 @@
 				ClearMarks();
 				SetMarks();
 			}
+
+			SpinStarted.Execute();
 		}
 
 		private void StopSpin()
@@ -221,10 +226,15 @@
 		private void OnAllStopped()
 		{
 			Debug.Log( "ALL STOPPED" );
-			CheckIfWinAndPlayFX();
+			CheckIfAllVisibleLinesWinAndPlayFX();
+
+			if ( _isWin )
+				StopWithWin.Execute();
+			else
+				StopWithLose.Execute();
 		}
 
-		private void CheckIfWinAndPlayFX()
+		private void CheckIfAllVisibleLinesWinAndPlayFX()
 		{
 			var rows = _view.Rows;
 			
