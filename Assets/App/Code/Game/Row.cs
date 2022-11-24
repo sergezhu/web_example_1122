@@ -86,8 +86,8 @@
 			
 			var picPos =  PicsVisible  * _sizePerPic + _contentRect.anchoredPosition.y - index * _sizePerPic;
 			//var picPos = (PicsVisible - 0.5f) * _sizePerPic - index * _sizePerPic + _contentRect.anchoredPosition.y;
-			var min = -0.1f * _sizePerPic;
-			var max = 3.1f * _sizePerPic;
+			var min = -0.25f * _sizePerPic;
+			var max = 3.25f * _sizePerPic;
 			var inScreen = picPos >= min && picPos <= max;
 			
 			Debug.Log( $"InScreen -- index:{index}, pos:{picPos}, in : {inScreen}, _sizePerPic : {_sizePerPic}" );
