@@ -121,9 +121,9 @@
 		private IEnumerator SpinAsync()
 		{
 			var delay = Mathf.Max( _settings.AccelerateDuration + 0.1f, _settings.DelayBeforeStop );
-			Debug.LogWarning( $"SPIN! delay : {delay}, isWin : {_isWin}" );
 
 			StartSpin();
+			Debug.LogWarning( $"SPIN! delay : {delay}, isWin : {_isWin}" );
 
 			yield return new WaitForSeconds( delay );
 			StopSpin();
@@ -275,16 +275,16 @@
 					dataGroup.AddRange( picsDataDoubles );
 					
 					dataGroup
-						.Where( tuple =>
-						{
-							return true;
-							//return rows[tuple.Item1].IsIndexInScreen( tuple.Item2 );
-						} )
-						.ForEach( data =>
+						.Where( data =>
 						{
 							var inScreen = rows[data.Row].IsIndexInScreen( data.Index );
 							Debug.Log( $"IsIndexInScreen: row{data.Row}, index:{data.Index}, inScreen : {inScreen}" );
 							
+							return inScreen;
+							//return rows[tuple.Item1].IsIndexInScreen( tuple.Item2 );
+						} )
+						.ForEach( data =>
+						{
 							var pic = rows[data.Row].Pics[data.Index];
 							_winPics.Add( pic );
 							pic.SetWinFXState( true );

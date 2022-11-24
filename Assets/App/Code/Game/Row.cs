@@ -84,19 +84,21 @@
 		{
 			//var totalPos = Mathf.FloorToInt((float)index / Total);
 			
-			var picPos = ( PicsVisible - 0.5f) * _sizePerPic + _contentRect.anchoredPosition.y - (index % Total) * _sizePerPic;
+			var picPos =  PicsVisible  * _sizePerPic + _contentRect.anchoredPosition.y - index * _sizePerPic;
 			//var picPos = (PicsVisible - 0.5f) * _sizePerPic - index * _sizePerPic + _contentRect.anchoredPosition.y;
-			var min = 0;
-			var max = 3f * _sizePerPic;
+			var min = -0.1f * _sizePerPic;
+			var max = 3.1f * _sizePerPic;
 			var inScreen = picPos >= min && picPos <= max;
+			
+			Debug.Log( $"InScreen -- index:{index}, pos:{picPos}, in : {inScreen}, _sizePerPic : {_sizePerPic}" );
 
 			return inScreen;
 		} 
 
 		private void InitRect()
 		{
-			_size = _contentRect.sizeDelta.y * Total / _pics.Count;
-			_sizePerPic = _size / _pics.Count;
+			_sizePerPic = _contentRect.sizeDelta.y / _pics.Count;
+			_size = _sizePerPic * Total;
 
 			Debug.Log( $"size : {_contentRect.rect.height}");
 		}
