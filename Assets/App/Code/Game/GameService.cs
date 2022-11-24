@@ -64,6 +64,10 @@
 				.Subscribe( _ => OnSpinButtonClick() )
 				.AddTo( this );
 
+			_view.ExitButtonClick
+				.Subscribe( _ => Application.Quit() )
+				.AddTo( this );
+
 			_rowStatesO = _view.Rows
 				.Select( row => row.State.Where( _ => _view.Rows.All( row2 => row2.State.Value == RowState.Stopped ) ).Skip( 1 ) );
 			

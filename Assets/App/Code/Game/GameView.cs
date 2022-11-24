@@ -13,11 +13,13 @@
 		
 		[Space]
 		[SerializeField] private Button _spinButton;
+		[SerializeField] private Button _exitButton;
 
 		[Space]
 		[SerializeField] private List<Row> _rows;
 
 		public IObservable<Unit> SpinButtonClick { get; private set; }
+		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IReadOnlyList<Row> Rows => _rows;
 
 
@@ -26,6 +28,7 @@
 			Hide();
 
 			SpinButtonClick = _spinButton.onClick.AsObservable();
+			ExitButtonClick = _exitButton.onClick.AsObservable();
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
