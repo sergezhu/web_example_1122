@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2162222}
   - component: {fileID: 2162224}
   - component: {fileID: 2162223}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Embers_AA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4812,7 +4812,7 @@ GameObject:
   - component: {fileID: 875694054}
   - component: {fileID: 875694056}
   - component: {fileID: 875694055}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Line_AB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9703,7 +9703,7 @@ GameObject:
   - component: {fileID: 1080197439}
   - component: {fileID: 1080197441}
   - component: {fileID: 1080197440}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Line_AA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14594,7 +14594,7 @@ GameObject:
   - component: {fileID: 1211731677563246041}
   - component: {fileID: 1211731677563245991}
   - component: {fileID: 1211731677563245990}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wave_AA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19418,7 +19418,7 @@ GameObject:
   - component: {fileID: 1365763360524106978}
   - component: {fileID: 1365763360524107004}
   - component: {fileID: 1365763360524107005}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Burnmark_AA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24305,7 +24305,7 @@ GameObject:
   - component: {fileID: 2144237994678773106}
   - component: {fileID: 2144237994692853078}
   - component: {fileID: 2144237994692708684}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CircleMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29081,7 +29081,7 @@ GameObject:
   - component: {fileID: 3049428253405200620}
   - component: {fileID: 3455498449517880852}
   - component: {fileID: 3922247334887890555}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FX_PowerUp_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29097,7 +29097,7 @@ Transform:
   m_GameObject: {fileID: 3049428253405200621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1211731677563246041}
@@ -33944,7 +33944,7 @@ GameObject:
   - component: {fileID: 4346457330195515199}
   - component: {fileID: 4346457330195515201}
   - component: {fileID: 4346457330195515200}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Wave_AB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38768,7 +38768,7 @@ GameObject:
   - component: {fileID: 4711250639817994995}
   - component: {fileID: 4711250639817994989}
   - component: {fileID: 4711250639817994988}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Glow_AA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43659,7 +43659,7 @@ GameObject:
   - component: {fileID: 5057326531867232814}
   - component: {fileID: 5057326531867232800}
   - component: {fileID: 5057326531867232801}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Glow_AB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48550,7 +48550,7 @@ GameObject:
   - component: {fileID: 6605214785990969908}
   - component: {fileID: 6605214785990969910}
   - component: {fileID: 6605214785990969909}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Darken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53441,7 +53441,7 @@ GameObject:
   - component: {fileID: 6605214786588152257}
   - component: {fileID: 6605214786588152259}
   - component: {fileID: 6605214786588152258}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58215,7 +58215,7 @@ GameObject:
   - component: {fileID: 6762353854367109406}
   - component: {fileID: 6762353854351852116}
   - component: {fileID: 6762353854353578104}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Stars_AB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63017,7 +63017,7 @@ GameObject:
   - component: {fileID: 9213118880250276864}
   - component: {fileID: 9213118880269628452}
   - component: {fileID: 9213118880270270526}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CircleStatic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

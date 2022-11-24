@@ -48,7 +48,7 @@
 
 			_winPics = new List<Pic>();
 			_markedPics = new List<Pic>();
-		}
+		} 
 
 		private bool CanSpin => _view.Rows.All( row => row.CanSpin );
 		private int IndexWithOffset( int i, int o ) => (i - o + Row.Total ) % (Row.Total );

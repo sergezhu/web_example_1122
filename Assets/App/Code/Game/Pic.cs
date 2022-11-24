@@ -12,7 +12,7 @@ namespace App.Code.Game
         [Space]
         [SerializeField] private Image _normal;
         [SerializeField] private Image _blurred;
-        [SerializeField] private RawImage _winFX;
+        [SerializeField] private GameObject _winFX;
         [SerializeField] private Image _mark;
         
         private bool _isStop;
@@ -52,7 +52,7 @@ namespace App.Code.Game
 
         public void SetWinFXState( bool state )
         {
-            _winFX.gameObject.SetActive( state );
+            _winFX.SetActive( state );
         }
 
         public void SetMarkState( bool state )
