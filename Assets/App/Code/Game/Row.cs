@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using App.Code.Utils;
 	using DG.Tweening;
 	using UniRx;
 	using UnityEngine;
@@ -42,12 +43,13 @@
 		private int _targetIndex;
 		private float _finishRelativeOffset;
 		private float _storedFinishRelativeOffset;
-		
+		private float _sizePerPic;
+
 		public bool CanSpin { get; private set; }
 		public ReactiveCommand TurnPassed { get; } = new();
-		public ReadOnlyReactiveProperty<RowState> State { get; private set; } 
+		public ReadOnlyReactiveProperty<RowState> State { get; private set; }
 
-
+		
 		private void Awake()
 		{
 			State = _state.ToReadOnlyReactiveProperty();
@@ -78,9 +80,23 @@
 			}
 		}
 
+		public bool IsIndexInScreen( int index )
+		{
+			//var totalPos = Mathf.FloorToInt((float)index / Total);
+			
+			var picPos = ( PicsVisible - 0.5f) * _sizePerPic + _contentRect.anchoredPosition.y - (index % Total) * _sizePerPic;
+			//var picPos = (PicsVisible - 0.5f) * _sizePerPic - index * _sizePerPic + _contentRect.anchoredPosition.y;
+			var min = 0;
+			var max = 3f * _sizePerPic;
+			var inScreen = picPos >= min && picPos <= max;
+
+			return inScreen;
+		} 
+
 		private void InitRect()
 		{
 			_size = _contentRect.sizeDelta.y * Total / _pics.Count;
+			_sizePerPic = _size / _pics.Count;
 
 			Debug.Log( $"size : {_contentRect.rect.height}");
 		}
@@ -207,6 +223,16 @@
 		{
 			//Debug.Log( $"{_currentRelativeSpeed}" );
 			_pics.ForEach( pic => pic.UpdateView( _currentRelativeSpeed ) );
+		}
+
+		[ContextMenu("PrintIndexesInScreen")]
+		private void PrintIndexesInScreen()
+		{
+			Pics.ForEach( ( pic, i ) =>
+			{
+				if(IsIndexInScreen( i ))
+					Debug.Log( $"InScreen  : {i}, type : {pic.Type}" );
+			} );
 		}
 	}
 }

@@ -15,6 +15,7 @@
 		{
 			public int Index;
 			public int Type;
+			public int Row;
 		}
 
 		private IEnumerable<IObservable<RowState>> _rowStatesO;
@@ -185,7 +186,6 @@
 			var rowArray = rows.ToArray();
 			var combos = new List<List<PicData>>();
 			var rowIndex = 0;
-			rowIndex = 0;
 
 			while ( IsValidRow( rowIndex ) )
 			{
@@ -219,7 +219,7 @@
 
 			PicData RowLineFunc( int row, int line )
 			{
-				return new() {Index = line, Type = rowArray[row].Pics[line].ID};
+				return new() {Index = line, Type = rowArray[row].Pics[line].Type};
 			}
 		}
 
@@ -253,31 +253,48 @@
 			{
 				var indexes = _currentCombo.Select( data => IndexWithOffsetF( data.Index, offset ) ).ToArray();
 
-				var pics = new List<Pic>();
-				var picsDoubles = new List<Pic>();
+				var picsData = new List<PicData>();
+				var picsDataDoubles = new List<PicData>();
 				indexes.ForEach( (index, row) =>
 				{
-					pics.Add( rows[row].Pics[index] );
-					
-					if(index < Row.PicsVisible)
-						picsDoubles.Add( rows[row].Pics[index + Row.Total] );
+					picsData.Add( new PicData(){Index = index, Row = row, Type = rows[row].Pics[index].Type} );
+
+					if ( index < Row.PicsVisible )
+						picsDataDoubles.Add( new PicData() {Index = index + Row.Total, Row = row, Type = rows[row].Pics[index + Row.Total].Type} );
 				} );
 
-				var isWin = pics.All( pic => pic.ID == pics[0].ID );
+				var pics = picsData.Select( data => rows[data.Row].Pics[data.Index] ).ToList();
+				var isWin = pics.All( pic => pic.Type == pics[0].Type );
+				Debug.Log( $"offset : {offset}, picsCount : {pics.Count}" );
+				
+				//var isWin = indexPair.All( tuple => rows[tuple.Item1].Pics[tuple.Item2].Type == rows[0].Pics[tuple.Item2].Type );
 
 				if ( isWin )
 				{
-					pics.ForEach( pic =>
-					{
-						_winPics.Add( pic );
-						pic.SetWinFXState( true );
-					} );
+					var dataGroup = new List<PicData>( picsData );
+					dataGroup.AddRange( picsDataDoubles );
+					
+					dataGroup
+						.Where( tuple =>
+						{
+							return true;
+							//return rows[tuple.Item1].IsIndexInScreen( tuple.Item2 );
+						} )
+						.ForEach( data =>
+						{
+							var inScreen = rows[data.Row].IsIndexInScreen( data.Index );
+							Debug.Log( $"IsIndexInScreen: row{data.Row}, index:{data.Index}, inScreen : {inScreen}" );
+							
+							var pic = rows[data.Row].Pics[data.Index];
+							_winPics.Add( pic );
+							pic.SetWinFXState( true );
+						} );
 
-					picsDoubles.ForEach( pic =>
+					/*picsDoubles.ForEach( pic =>
 					{
 						_winPics.Add( pic );
 						pic.SetWinFXState( true );
-					} );
+					} );*/
 					
 					Debug.LogWarning( $"IsWin is TRUE but expected FALSE" );
 					_isWin = true;

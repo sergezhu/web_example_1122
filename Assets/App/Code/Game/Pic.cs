@@ -1,13 +1,12 @@
-using UnityEngine;
-
 namespace App.Code.Game
 {
     using DG.Tweening;
+    using UnityEngine;
     using UnityEngine.UI;
 
     public class Pic : MonoBehaviour
     {
-        [SerializeField] private int _id;
+        [SerializeField] private int _type;
         
         [Space]
         [SerializeField] private Image _normal;
@@ -22,7 +21,7 @@ namespace App.Code.Game
 
         private Tween[] _tweens;
 
-        public int ID => _id;
+        public int Type => _type;
 
         private void Awake()
         {
