@@ -45,7 +45,7 @@
 
 		private bool CanSpin => _view.Rows.All( row => row.CanSpin );
 		private int IndexWithOffset( int i, int o ) => (i - o + Row.Total ) % (Row.Total );
-		private int IndexWithOffsetF( int i, int o ) => (i - o + Row.Total + Row.PicsVisible ) % (Row.Total + Row.PicsVisible);
+		private int IndexWithOffsetF( int i, int o ) => (i + o - _comboOffset + Row.Total) % (Row.Total);
 
 		public void Run()
 		{
@@ -116,15 +116,18 @@
 			_currentCombo = GetRandomCombo();
 			_comboOffset = Random.Range( 0, 3 );
 			
-			_currentCombo.ForEach( c => Debug.Log( $"{c.Index}:{c.Type}" ) );
+			_currentCombo.ForEach( c => Debug.Log( $"{c.Index}:{c.Type}, OFFSET: {_comboOffset}" ) );
 			
 			foreach ( var row in _view.Rows )
 			{
 				row.StartSpin( _settings.AccelerateDuration, _settings.MaxSpeed );
 			}
 
-			ClearMarks();
-			SetMarks();
+			if ( _settings.EnableMarks )
+			{
+				ClearMarks();
+				SetMarks();
+			}
 		}
 
 		private void StopSpin()
@@ -222,16 +225,29 @@
 			
 			for ( int offset = 0; offset < 3; offset++ )
 			{
-				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, offset ) ).ToArray();
+				var indexes = _currentCombo.Select( data => IndexWithOffsetF( data.Index, offset ) ).ToArray();
 
 				var pics = new List<Pic>();
-				indexes.ForEach( (index, row) => pics.Add( rows[row].Pics[index] ));
+				var picsDoubles = new List<Pic>();
+				indexes.ForEach( (index, row) =>
+				{
+					pics.Add( rows[row].Pics[index] );
+					
+					if(index < Row.PicsVisible)
+						picsDoubles.Add( rows[row].Pics[index + Row.Total] );
+				} );
 
 				var isWin = pics.All( pic => pic.ID == pics[0].ID );
 
 				if ( isWin )
 				{
 					pics.ForEach( pic =>
+					{
+						_winPics.Add( pic );
+						pic.SetWinFXState( true );
+					} );
+
+					picsDoubles.ForEach( pic =>
 					{
 						_winPics.Add( pic );
 						pic.SetWinFXState( true );
@@ -252,10 +268,16 @@
 
 			for ( int offset = 0; offset < 3; offset++ )
 			{
-				var indexes = _currentCombo.Select( data => IndexWithOffset( data.Index, offset ) ).ToArray();
+				var indexes = _currentCombo.Select( data => IndexWithOffsetF( data.Index, offset ) ).ToArray();
 
 				var pics = new List<Pic>();
-				indexes.ForEach( ( index, row ) => pics.Add( rows[row].Pics[index] ) );
+				indexes.ForEach( ( index, row ) =>
+				{
+					pics.Add( rows[row].Pics[index] );
+
+					if ( index < Row.PicsVisible )
+						pics.Add( rows[row].Pics[index + Row.Total] );
+				} );
 
 				pics.ForEach( pic =>
 				{

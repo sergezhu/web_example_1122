@@ -821,6 +821,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3416312907049787365, guid: 7ed429ef0b576de41976d925ebe5e0bb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3416312907868814190, guid: 7ed429ef0b576de41976d925ebe5e0bb, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1000
@@ -1266,6 +1270,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3416312907012370455, guid: ec3a1be1c298ce94d965defc258b2ea0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416312907049787365, guid: ec3a1be1c298ce94d965defc258b2ea0, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3416312907868814190, guid: ec3a1be1c298ce94d965defc258b2ea0, type: 3}
@@ -2763,6 +2771,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3416312907049787365, guid: a2c6d0e1dd584a149a01a5e4b92e5a60, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3416312907868814190, guid: a2c6d0e1dd584a149a01a5e4b92e5a60, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1000
@@ -3530,6 +3542,7 @@ MonoBehaviour:
   RandomDelayBeforeStart: 1
   LoopsBeforeStop: 1
   WinChance: 1
+  EnableMarks: 0
 --- !u!114 &1723135656
 MonoBehaviour:
   m_ObjectHideFlags: 0

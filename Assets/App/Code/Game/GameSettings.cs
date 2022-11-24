@@ -17,5 +17,8 @@
 		[Header( "Random Tune" )]
 		[Range(0, 1)]
 		public float WinChance;
+
+		[Header( "Debug" )]
+		public bool EnableMarks;
 	}
 }
