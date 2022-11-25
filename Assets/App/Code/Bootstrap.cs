@@ -1,5 +1,6 @@
 ﻿namespace App.Code
 {
+	using System;
 	using System.Collections;
 	using App.Code.Audio;
 	using App.Code.Game;
@@ -27,9 +28,15 @@
 
 		private void Start()
 		{
+			Action<string> errorAction = errInfo =>
+			{
+				_gameView.SetResultNoDataWindow( errInfo );
+				_gameView.ShowNoDataWindow();
+			};
+			
 			_internetStateService = new InternetStateService();
-			_remoteConfigLoader = new FirebaseRemoteConfigLoader();
-			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader );
+			_remoteConfigLoader = new FirebaseRemoteConfigLoader( errorAction );
+			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader, errorAction );
 			_playerPrefsSystem = new PlayerPrefsSystem();
 			_audioController = new AudioController( _audioLibrary, _gameService );
 
@@ -70,26 +77,6 @@
 			{
 				StartCoroutine( WaitInitialization() );
 			}
-			
-			/*
-			 if ( hasInternet )
-			{
-				if ( prefsData != null )
-				{
-					HideVeil();
-					ShowWebView();
-				}
-				else
-				{
-					StartCoroutine( WaitInitialization() );
-				}
-			}
-			else
-			{
-				_gameView.ShowNoInternetWindow();
-			}
-			 */
-			
 		}
 
 		private IEnumerator WaitInitialization()

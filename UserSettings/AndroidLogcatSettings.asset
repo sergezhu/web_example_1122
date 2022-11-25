@@ -3,17 +3,11 @@
     "m_SelectedPackage": {
         "deviceId": "357a8c970804",
         "name": "pillo.kansino",
-        "processId": 32055,
+        "processId": 17836,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "357a8c970804",
-            "name": "pillo.kansino",
-            "processId": 27542,
-            "exited": true
-        },
         {
             "deviceId": "357a8c970804",
             "name": "pillo.kansino",
@@ -36,6 +30,12 @@
             "deviceId": "357a8c970804",
             "name": "pillo.kansino",
             "processId": 32055,
+            "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "pillo.kansino",
+            "processId": 17836,
             "exited": false
         }
     ],

@@ -11,6 +11,7 @@
 	public class GameView : BaseUIWindow
 	{
 		[SerializeField] private UINoInternetWarningWindow _noInternetWarningWindow;
+		[SerializeField] private UINoDataWarningWindow _noDataWarningWindow;
 		
 		[Space]
 		[SerializeField] private Button _spinButton;
@@ -27,6 +28,7 @@
 		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IReadOnlyList<Row> Rows => _rows;
 
+		
 
 		public override void Init()
 		{
@@ -41,6 +43,9 @@
 
 		public void ShowNoInternetWindow() => _noInternetWarningWindow.Show();
 		public void HideNoInternetWindow() => _noInternetWarningWindow.Hide();
+		public void ShowNoDataWindow() => _noDataWarningWindow.Show();
+		public void HideNoDataWindow() => _noDataWarningWindow.Hide();
+		public void SetResultNoDataWindow(string result) => _noDataWarningWindow.SetResultText( result );
 
 		public void SetCoinsEmission( float value )
 		{

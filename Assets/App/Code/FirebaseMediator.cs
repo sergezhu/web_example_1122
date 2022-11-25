@@ -14,12 +14,14 @@
 		private InternetStateService _internetCheckService;
 		private ConfiguredTaskAwaitable _initAwaitable;
 		private FirebaseRemoteConfigLoader _remoteConfigLoader;
+		private readonly Action<string> _onErrorAction;
 
 
-		public FirebaseMediator( InternetStateService internetCheckService, FirebaseRemoteConfigLoader remoteConfigLoader )
+		public FirebaseMediator( InternetStateService internetCheckService, FirebaseRemoteConfigLoader remoteConfigLoader, Action<string> onErrorAction = null )
 		{
 			_internetCheckService = internetCheckService;
 			_remoteConfigLoader = remoteConfigLoader;
+			_onErrorAction = onErrorAction;
 		}
 
 		public void Initialize()
@@ -54,6 +56,7 @@
 			catch ( Exception ex )
 			{
 				Debug.LogError( $"Firebase Initialize Exception : {ex.Message}" );
+				_onErrorAction?.Invoke( ex.Message );
 			}
 		}
 

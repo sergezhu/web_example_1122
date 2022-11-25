@@ -16,14 +16,17 @@
 			Connected,
 			IsReady
 		}
-		
+
+
+		private readonly Action<string> _onErrorAction;
 		private readonly FirebaseRemoteConfig _remoteConfig;
 
 		public FirebaseStatus FbStatus { get; private set; } = FirebaseStatus.Unknown;
 
 
-		public FirebaseRemoteConfigLoader()
+		public FirebaseRemoteConfigLoader( Action<string> onErrorAction = null )
 		{
+			_onErrorAction = onErrorAction;
 			_remoteConfig = FirebaseRemoteConfig.DefaultInstance;
 
 			Debug.Log( $"FirebaseRemoteConfig Initialized" );
@@ -41,6 +44,7 @@
 				catch ( Exception ex )
 				{
 					Debug.LogError( $"Firebase Fetching Exception : {ex.Message}" );
+					_onErrorAction?.Invoke( ex.Message );
 				}
 			} );
 		}
@@ -72,6 +76,7 @@
 			}
 
 			var info = _remoteConfig.Info;
+			string errMsg;
 			switch ( info.LastFetchStatus )
 			{
 				case LastFetchStatus.Success:
@@ -88,17 +93,23 @@
 					switch ( info.LastFetchFailureReason )
 					{
 						case FetchFailureReason.Error:
-							Debug.Log( "Fetch failed for unknown reason" );
+							errMsg = "Fetch failed for unknown reason";
+							Debug.Log( errMsg );
+							_onErrorAction?.Invoke( errMsg );
 							break;
 						case FetchFailureReason.Throttled:
-							Debug.Log( "Fetch throttled until " + info.ThrottledEndTime );
+							errMsg = "Fetch throttled until " + info.ThrottledEndTime;
+							Debug.Log( errMsg );
+							_onErrorAction?.Invoke( errMsg );
 							break;
 					}
 					break;
 				
 				case LastFetchStatus.Pending:
 					FbStatus = FirebaseStatus.IsReady;
-					Debug.Log( "Latest Fetch call still pending." );
+					errMsg = "Latest Fetch call still pending.";
+					Debug.Log( errMsg );
+					_onErrorAction?.Invoke( errMsg );
 					break;
 			}
 		}
