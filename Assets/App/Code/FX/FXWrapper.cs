@@ -1,8 +1,6 @@
 namespace App.Code.FX
 {
-	using System;
 	using UnityEngine;
-	using UnityEngine.UI;
 
 	public class FXWrapper : MonoBehaviour
 	{
