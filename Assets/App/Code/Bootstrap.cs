@@ -81,12 +81,13 @@
 			_playerPrefsSystem = new PlayerPrefsSystem();
 			_audioController = new AudioController( _audioLibrary, _gameService );
 			_inputManager = new InputManager();
-
+			
 			#if UNITY_EDITOR
 			if ( _clearPrefsWhenStart )
 				_playerPrefsSystem.DeletePlayerPrefs();
 			#endif
 
+			_inputManager.Initialize();
 			_inputManager.MainActions.Back.SubscribeToPerformed( _ => _webView.GoBack() );
 		}
 
@@ -109,7 +110,7 @@
 
 			Debug.Log( $"Read url : {url}" );
 
-			if ( urlIsEmpty || _webView.IsEmu() || _webView.GetSimStatus() == false ) 
+			if ( urlIsEmpty || _webView.IsEmu() || !_webView.IsPhysicalDevice() || _webView.GetSimStatus() == false ) 
 			{
 				HideVeil();
 				_gameService.Run();

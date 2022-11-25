@@ -77,18 +77,34 @@ public class WebView : MonoBehaviour
         StartCoroutine( StartWebPage() );
     }
 
-    public bool IsBrandDevice()
-    {
-        return SystemInfo.deviceModel.ToLower().Contains( "google" );
-    }
-
     public bool IsEmu()
     {
-        var brandDevice = SystemInfo.deviceModel.ToLower();
-        return brandDevice.Contains( "google" );
+        var model = SystemInfo.deviceModel;
+        var modelLower = model.ToLower();
+        Debug.Log( $"Device : model={model}" );
 
-        /*if ( BuildConfig.DEBUG ) return false // when developer use this build on
-        emulator
+        var result = modelLower.Contains( "google" )
+                  || modelLower.Contains( "sdk" )
+                  || modelLower.Contains( "droid4x" )
+                  || model.Contains( "Emulator" )
+                  || model.Contains( "Android SDK built for x86" )
+                  || model.Contains( "Genymotion" )
+                  || modelLower.Contains( "goldfish" )
+                  || modelLower.Contains( "vbox86" )
+                  || modelLower.Contains( "vbox86p" );
+        
+        return result;
+    }
+
+    public bool IsPhysicalDevice()
+    {
+        var deviceType = SystemInfo.deviceType;
+        
+        Debug.Log( $"Device : type={deviceType}, uin : {SystemInfo.deviceUniqueIdentifier}" );
+        
+        return deviceType == DeviceType.Handheld;
+
+        /*if ( BuildConfig.DEBUG ) return false // when developer use this build on emulator
         val phoneModel = Build.MODEL val buildProduct = Build.PRODUCT
         val buildHardware = Build.HARDWARE
         var result = (Build.FINGERPRINT.startsWith( "generic" )
