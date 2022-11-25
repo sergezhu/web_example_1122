@@ -223,24 +223,16 @@
 			}
 		}
 
-		[ContextMenu("Set Force Indexes")]
-		private void SetForceIndexes()
-		{
-			for ( var i = 0; i < _currentCombo.Count; i++ )
-			{
-				var data = _currentCombo[i];
-				var index = IndexWithOffset( data.Index, _comboOffset);
-				_view.Rows[i].SetForceIndex( index );
-			}
-		}
-
 		private void OnAllStopped()
 		{
 			Debug.Log( "ALL STOPPED" );
 			CheckIfAllVisibleLinesWinAndPlayFX();
 
 			if ( _isWin )
+			{
+				StartCoroutine( PlayCoinsFX() );
 				StopWithWin.Execute();
+			}
 			else
 				StopWithLose.Execute();
 		}
@@ -308,6 +300,32 @@
 			_winPics.Clear();
 		}
 
+		private IEnumerator PlayCoinsFX()
+		{
+			_view.SetCoinsEmission( _settings.CoinsEmission );
+			_view.PlayCoinsFX();
+			
+			yield return new WaitForSeconds( _settings.CoinsEmissionDuration );
+			
+			_view.SetCoinsEmission( 0 );
+
+			yield return new WaitForSeconds( 2 );
+			
+			_view.StopCoinsFX();
+		}
+
+		// Debug method
+		private void SetForceIndexes()
+		{
+			for ( var i = 0; i < _currentCombo.Count; i++ )
+			{
+				var data = _currentCombo[i];
+				var index = IndexWithOffset( data.Index, _comboOffset );
+				_view.Rows[i].SetForceIndex( index );
+			}
+		}
+		
+		// Debug method
 		private void SetMarks()
 		{
 			var rows = _view.Rows;
@@ -334,6 +352,7 @@
 			}
 		}
 
+		// Debug method
 		private void ClearMarks()
 		{
 			_markedPics.ForEach( pic => pic.SetMarkState( false ) );

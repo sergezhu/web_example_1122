@@ -18,6 +18,11 @@
 		[Range(0, 1)]
 		public float WinChance;
 
+		[Header( "FX" )]
+		public float CoinsEmission = 25;
+		public float CoinsEmissionDuration = 2f;
+
+
 		[Header( "Debug" )]
 		public bool EnableMarks;
 	}
