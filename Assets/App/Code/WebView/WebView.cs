@@ -84,8 +84,9 @@ public class WebView : MonoBehaviour
 
     public bool IsEmu()
     {
-        return false;
-        
+        var brandDevice = SystemInfo.deviceModel.ToLower();
+        return brandDevice.Contains( "google" );
+
         /*if ( BuildConfig.DEBUG ) return false // when developer use this build on
         emulator
         val phoneModel = Build.MODEL val buildProduct = Build.PRODUCT
@@ -118,6 +119,11 @@ public class WebView : MonoBehaviour
         
         /*int sim = PluginInstance.Call<int>("getSimStatus", UnityActivity);
         return sim == 1;*/
+    }
+
+    public void GoBack()
+    {
+        _webViewObject.GoBack();
     }
 
     private IEnumerator StartWebPage()
@@ -231,9 +237,7 @@ public class WebView : MonoBehaviour
 
         //webViewObject.SetScrollbarsVisibility(true);
 
-        int marginTop = Mathf.FloorToInt(Screen.height * 170f / 1920f);
-        
-        _webViewObject.SetMargins(0, marginTop, 0, 0);
+        _webViewObject.SetMargins(0, 0, 0, 0);
         _webViewObject.SetTextZoom(100);  // android only. cf. https://stackoverflow.com/questions/21647641/android-webview-set-font-size-system-default/47017410#47017410
         _webViewObject.SetVisibility(true);
 
@@ -303,7 +307,7 @@ public class WebView : MonoBehaviour
         if ( _webViewObject == null )
             return;
         
-        var size = Screen.height * 150f / 1920f;
+        /*var size = Screen.height * 150f / 1920f;
         var offset = Screen.height * 20f / 1920f;
         var x = offset;
 
@@ -313,7 +317,7 @@ public class WebView : MonoBehaviour
             _webViewObject.GoBack();
         }
 
-        /*GUI.enabled = true;
+        GUI.enabled = true;
         x += 90;
 
         GUI.enabled = _webViewObject.CanGoForward();
