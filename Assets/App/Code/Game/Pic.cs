@@ -61,8 +61,6 @@ namespace App.Code.Game
 
         private void SetBlurActiveState( float speed )
         {
-            //Debug.Log( $"SetBlurActiveState {name}, threshol  {_speedThreshold}" );
-            
             var needBlur = speed >= _speedThreshold;
             var isBlurred = _blurred.gameObject.activeSelf;
             

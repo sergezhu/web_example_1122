@@ -154,7 +154,6 @@
 
 		private void StopSpin()
 		{
-			//var indexes = _currentCombo.Select( combo => combo.Index).ToArray();
 			var indexes = _currentCombo.Select( combo => IndexWithOffset( combo.Index, _comboOffset ) ).ToArray();
 
 			for ( var i = 0; i < _view.Rows.Count; i++ )
@@ -257,9 +256,7 @@
 
 				var pics = picsData.Select( data => rows[data.Row].Pics[data.Index] ).ToList();
 				var isWin = pics.All( pic => pic.Type == pics[0].Type );
-				Debug.Log( $"offset : {offset}, picsCount : {pics.Count}" );
-				
-				//var isWin = indexPair.All( tuple => rows[tuple.Item1].Pics[tuple.Item2].Type == rows[0].Pics[tuple.Item2].Type );
+				//Debug.Log( $"offset : {offset}, picsCount : {pics.Count}" );
 
 				if ( isWin )
 				{
@@ -270,7 +267,7 @@
 						.Where( data =>
 						{
 							var inScreen = rows[data.Row].IsIndexInScreen( data.Index );
-							Debug.Log( $"IsIndexInScreen: row{data.Row}, index:{data.Index}, inScreen : {inScreen}" );
+							//Debug.Log( $"IsIndexInScreen: row{data.Row}, index:{data.Index}, inScreen : {inScreen}" );
 							
 							return inScreen;
 							//return rows[tuple.Item1].IsIndexInScreen( tuple.Item2 );

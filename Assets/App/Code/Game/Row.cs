@@ -82,15 +82,12 @@
 
 		public bool IsIndexInScreen( int index )
 		{
-			//var totalPos = Mathf.FloorToInt((float)index / Total);
-			
 			var picPos =  PicsVisible  * _sizePerPic + _contentRect.anchoredPosition.y - index * _sizePerPic;
-			//var picPos = (PicsVisible - 0.5f) * _sizePerPic - index * _sizePerPic + _contentRect.anchoredPosition.y;
 			var min = -0.25f * _sizePerPic;
 			var max = 3.25f * _sizePerPic;
 			var inScreen = picPos >= min && picPos <= max;
 			
-			Debug.Log( $"InScreen -- index:{index}, pos:{picPos}, in : {inScreen}, _sizePerPic : {_sizePerPic}" );
+			//Debug.Log( $"InScreen -- index:{index}, pos:{picPos}, in : {inScreen}, _sizePerPic : {_sizePerPic}" );
 
 			return inScreen;
 		} 
@@ -99,8 +96,6 @@
 		{
 			_sizePerPic = _contentRect.sizeDelta.y / _pics.Count;
 			_size = _sizePerPic * Total;
-
-			Debug.Log( $"size : {_contentRect.rect.height}");
 		}
 
 		private void Update()
@@ -192,7 +187,7 @@
 			_finishRelativeOffset = offset + _finishTurns - _currentRelativeOffset;
 			_storedFinishRelativeOffset = _finishRelativeOffset;
 
-			Debug.Log( $"Finishing : curOf {_currentRelativeOffset}, curSp {_currentRelativeSpeed}, turns : {_finishTurns}" );
+			//Debug.Log( $"Finishing : curOf {_currentRelativeOffset}, curSp {_currentRelativeSpeed}, turns : {_finishTurns}" );
 		}
 
 		private void FullStop()
