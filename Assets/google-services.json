@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "938475251756",
-    "firebase_url": "https://webviewexample-76147-default-rtdb.firebaseio.com",
-    "project_id": "webviewexample-76147",
-    "storage_bucket": "webviewexample-76147.appspot.com"
+    "project_number": "161160877234",
+    "project_id": "zhsekanz",
+    "storage_bucket": "zhsekanz.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:938475251756:android:54d570a45147857ef98989",
+        "mobilesdk_app_id": "1:161160877234:android:083c1d887b0d031c26e5ab",
         "android_client_info": {
           "package_name": "pillo.kansino"
         }
       },
       "oauth_client": [
         {
-          "client_id": "938475251756-cpppbdi1r6jc14qrl64hrrmkodd74gd9.apps.googleusercontent.com",
+          "client_id": "161160877234-unboujmot4crlli603463bk9on5s4pgl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD1MdG-8ICYbGxyuW5jPhMJpP7D3aGA8-4"
+          "current_key": "AIzaSyAb63xmHPCHvoPYyTLuvKxyTP5AMolxIDY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "938475251756-cpppbdi1r6jc14qrl64hrrmkodd74gd9.apps.googleusercontent.com",
+              "client_id": "161160877234-unboujmot4crlli603463bk9on5s4pgl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

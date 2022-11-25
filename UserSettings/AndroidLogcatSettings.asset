@@ -2,40 +2,40 @@
     "m_SelectedDeviceId": "357a8c970804",
     "m_SelectedPackage": {
         "deviceId": "357a8c970804",
-        "name": "com.SomeCompany.ExampleTask",
-        "processId": 16892,
+        "name": "pillo.kansino",
+        "processId": 32055,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "357a8c970804",
-            "name": "com.ZhumanzhiGames.SlideAndCollect",
-            "processId": 7105,
+            "name": "pillo.kansino",
+            "processId": 27542,
             "exited": true
         },
         {
             "deviceId": "357a8c970804",
-            "name": "com.SomeCompany.ExampleTask",
-            "processId": 13395,
+            "name": "pillo.kansino",
+            "processId": 31575,
             "exited": true
         },
         {
             "deviceId": "357a8c970804",
-            "name": "com.SomeCompany.ExampleTask",
-            "processId": 13695,
+            "name": "com.miui.home",
+            "processId": 2370,
             "exited": true
         },
         {
             "deviceId": "357a8c970804",
-            "name": "com.SomeCompany.ExampleTask",
-            "processId": 16370,
+            "name": "pillo.kansino",
+            "processId": 31883,
             "exited": true
         },
         {
             "deviceId": "357a8c970804",
-            "name": "com.SomeCompany.ExampleTask",
-            "processId": 16892,
+            "name": "pillo.kansino",
+            "processId": 32055,
             "exited": false
         }
     ],

@@ -34,7 +34,14 @@
 			_remoteConfig.SetDefaultsAsync( data ).ContinueWithOnMainThread( task =>
 			{
 				Debug.Log( "Save Default" );
-				Fetch();
+				try
+				{
+					Fetch();
+				}
+				catch ( Exception ex )
+				{
+					Debug.LogError( $"Firebase Fetching Exception : {ex.Message}" );
+				}
 			} );
 		}
 

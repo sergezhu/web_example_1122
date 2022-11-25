@@ -46,11 +46,13 @@
 			_gameView.Init();
 			_gameService.Construct( _gameView, _gameSettings );
 
+			#if UNITY_EDITOR
 			if ( _forceGameStart )
 			{
 				_gameService.Run();
 				return;
 			}
+			#endif
 
 			if ( prefsData != null )
 			{
