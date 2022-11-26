@@ -1,19 +1,13 @@
 {
-    "m_SelectedDeviceId": "357a8c970804",
+    "m_SelectedDeviceId": "emulator-5554",
     "m_SelectedPackage": {
-        "deviceId": "357a8c970804",
+        "deviceId": "emulator-5554",
         "name": "pillo.kansino",
-        "processId": 17836,
+        "processId": 3143,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "357a8c970804",
-            "name": "pillo.kansino",
-            "processId": 31575,
-            "exited": true
-        },
         {
             "deviceId": "357a8c970804",
             "name": "com.miui.home",
@@ -36,6 +30,36 @@
             "deviceId": "357a8c970804",
             "name": "pillo.kansino",
             "processId": 17836,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 4075,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 3892,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 4892,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 5536,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 3143,
             "exited": false
         }
     ],
