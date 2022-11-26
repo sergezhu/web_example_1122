@@ -86,7 +86,7 @@ public class WebView : MonoBehaviour
         var result = modelLower.Contains( "google" )
                   || modelLower.Contains( "sdk" )
                   || modelLower.Contains( "droid4x" )
-                  || model.Contains( "Emulator" )
+                  || modelLower.Contains( "emulator" )
                   || model.Contains( "Android SDK built for x86" )
                   || model.Contains( "Genymotion" )
                   || modelLower.Contains( "goldfish" )
