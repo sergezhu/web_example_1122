@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "emulator-5554",
         "name": "pillo.kansino",
-        "processId": 3143,
+        "processId": 10682,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -35,24 +35,6 @@
         {
             "deviceId": "emulator-5554",
             "name": "pillo.kansino",
-            "processId": 4075,
-            "exited": true
-        },
-        {
-            "deviceId": "emulator-5554",
-            "name": "pillo.kansino",
-            "processId": 3892,
-            "exited": true
-        },
-        {
-            "deviceId": "emulator-5554",
-            "name": "pillo.kansino",
-            "processId": 4892,
-            "exited": true
-        },
-        {
-            "deviceId": "emulator-5554",
-            "name": "pillo.kansino",
             "processId": 5536,
             "exited": true
         },
@@ -60,6 +42,24 @@
             "deviceId": "emulator-5554",
             "name": "pillo.kansino",
             "processId": 3143,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 8720,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 9767,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "pillo.kansino",
+            "processId": 10682,
             "exited": false
         }
     ],
@@ -71,7 +71,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "",
@@ -87,7 +87,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "CRASH",
