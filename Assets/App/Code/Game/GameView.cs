@@ -18,15 +18,11 @@
 		[SerializeField] private Button _exitButton;
 
 		[Space]
-		[SerializeField] private List<Row> _rows;
-
-		[Space]
 		[SerializeField] private FXWrapper _coinsLeftFX;
 		[SerializeField] private FXWrapper _coinsRightFX;
 
 		public IObservable<Unit> SpinButtonClick { get; private set; }
 		public IObservable<Unit> ExitButtonClick { get; private set; }
-		public IReadOnlyList<Row> Rows => _rows;
 
 		
 
