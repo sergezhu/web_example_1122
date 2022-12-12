@@ -38,6 +38,7 @@
 
 			HideVeil();
 
+			_gameView.Construct( _gameSettings );
 			_gameView.Init();
 			_gameService.Construct( _gameView, _gameSettings );
 
