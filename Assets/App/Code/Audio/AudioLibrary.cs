@@ -5,6 +5,7 @@
 	public class AudioLibrary : MonoBehaviour
 	{
 		public AudioSource BgMusic;
+		public AudioSource Start;
 		public AudioSource RightAnswer;
 		public AudioSource FailAnswer;
 		public AudioSource Click;

@@ -18,6 +18,7 @@
 
 		
 		public ReactiveCommand GameStarted { get; } = new();
+		public ReactiveCommand<bool> WordSelected { get; } = new();
 
 		public void Construct(GameView view, GameSettings settings) 
 		{
@@ -98,6 +99,8 @@
 				button.SetSprite( sprite );
 				button.Enable = false;
 			} );
+
+			WordSelected.Execute( _currentRightIndex == index );
 			
 			_view.EnableNextButton();
 		}

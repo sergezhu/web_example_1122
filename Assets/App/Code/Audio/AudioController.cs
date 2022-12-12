@@ -29,8 +29,8 @@
 
 		private void Subscribe()
 		{
-			_gameService.GameStarted
-				.Subscribe( _ => PlayBGMusic() )
+			_gameService.WordSelected
+				.Subscribe( v => OnWordSelected(v) )
 				.AddTo( _disposables );
 
 			_gameView.AnyButtonClick
@@ -48,6 +48,19 @@
 		{
 			if ( _lib.BgMusic.isPlaying )
 				_lib.BgMusic.Stop();
+		}
+
+		private void OnWordSelected( bool v )
+		{
+			if(v)
+				PlayRightAnswer();
+			else
+				PlayFailAnswer();
+		}
+
+		private void PlayStart()
+		{
+			_lib.Start.Play();
 		}
 
 		private void PlayRightAnswer()
