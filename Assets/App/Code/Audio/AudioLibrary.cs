@@ -5,9 +5,8 @@
 	public class AudioLibrary : MonoBehaviour
 	{
 		public AudioSource BgMusic;
-		public AudioSource Spin;
-		public AudioSource RewardCoins;
-		public AudioSource RewardMusic;
+		public AudioSource RightAnswer;
+		public AudioSource FailAnswer;
 		public AudioSource Click;
 	}
 }

@@ -29,6 +29,7 @@
 		public IObservable<Unit> NextButtonClick { get; private set; }
 		public IObservable<int> WordButtonClick { get; private set; }
 		public IObservable<Unit> ExitButtonClick { get; private set; }
+		public IObservable<Unit> AnyButtonClick { get; private set; }
 
 		public List<WordButton> WordButtons => _wordButtons;
 
@@ -47,8 +48,13 @@
 			NextButtonClick = _nextButton.ButtonClick;
 
 			_wordButtons.ForEach( b => b.Init() );
-			var wordClicks = _wordButtons.Select( b => b.IndexedClick );
-			WordButtonClick = wordClicks.Merge();
+			var wordIndexClicks = _wordButtons.Select( b => b.IndexedClick );
+			var wordNormalClicks = _wordButtons.Select( b => b.ButtonClick );
+			WordButtonClick = wordIndexClicks.Merge();
+
+			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick };
+			anyClicksObservables.AddRange( wordNormalClicks );
+			AnyButtonClick = anyClicksObservables.Merge();
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
@@ -87,7 +93,7 @@
 		public void HideNoDataWindow() => _noDataWarningWindow.Hide();
 		public void SetResultNoDataWindow(string result) => _noDataWarningWindow.SetResultText( result );
 
-		public void SetCoinsEmission( float value )
+		/*public void SetCoinsEmission( float value )
 		{
 			_coinsLeftFX.SetEmission( value );
 			_coinsRightFX.SetEmission( value );
@@ -103,6 +109,6 @@
 		{
 			_coinsLeftFX.Stop();
 			_coinsRightFX.Stop();
-		}
+		}*/
 	}
 }

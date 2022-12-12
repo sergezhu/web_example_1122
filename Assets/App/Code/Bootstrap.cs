@@ -80,7 +80,7 @@
 			_remoteConfigLoader = new FirebaseRemoteConfigLoader( errorAction );
 			_firebaseMediator = new FirebaseMediator( _internetStateService, _remoteConfigLoader, errorAction );
 			_playerPrefsSystem = new PlayerPrefsSystem();
-			_audioController = new AudioController( _audioLibrary, _gameService );
+			_audioController = new AudioController( _audioLibrary, _gameService, _gameView );
 			_inputManager = new InputManager();
 			
 			#if UNITY_EDITOR

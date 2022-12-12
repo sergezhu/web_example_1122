@@ -8,14 +8,16 @@
 	{
 		private AudioLibrary _lib;
 		private GameService _gameService;
+		private readonly GameView _gameView;
 
 		private CompositeDisposable _disposables;
 
-		public AudioController( AudioLibrary lib, GameService gameService )
+		public AudioController( AudioLibrary lib, GameService gameService, GameView gameView )
 		{
 			_disposables = new CompositeDisposable();
 			_lib = lib;
 			_gameService = gameService;
+			_gameView = gameView;
 
 			Subscribe();
 		}
@@ -31,23 +33,7 @@
 				.Subscribe( _ => PlayBGMusic() )
 				.AddTo( _disposables );
 
-			_gameService.StopWithLose
-				.Subscribe( _ => { } )
-				.AddTo( _disposables );
-
-			_gameService.StopWithWin
-				.Subscribe( _ =>
-				{
-					PlayRewardMusic();
-					PlayRewardCoins();
-				} )
-				.AddTo( _disposables );
-
-			_gameService.SpinStarted
-				.Subscribe( _ => PlaySpin() )
-				.AddTo( _disposables );
-
-			_gameService.AnyRowTurnPassed
+			_gameView.AnyButtonClick
 				.Subscribe( _ => PlayClick() )
 				.AddTo( _disposables );
 		}
@@ -64,19 +50,14 @@
 				_lib.BgMusic.Stop();
 		}
 
-		private void PlaySpin()
+		private void PlayRightAnswer()
 		{
-			_lib.Spin.Play();
+			_lib.RightAnswer.Play();
 		}
 
-		private void PlayRewardCoins()
+		private void PlayFailAnswer()
 		{
-			_lib.RewardCoins.Play();
-		}
-
-		private void PlayRewardMusic()
-		{
-			_lib.RewardMusic.Play();
+			_lib.FailAnswer.Play();
 		}
 
 		private void PlayClick()

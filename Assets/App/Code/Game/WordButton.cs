@@ -12,15 +12,15 @@
 		[SerializeField] private Button _button;
 		[SerializeField] private Image _img;
 
-		private IObservable<Unit> _buttonClick;
+		public IObservable<Unit> ButtonClick;
 		public IObservable<int> IndexedClick { get; private set; }
 		public bool Enable { get; set; }
 		public int Index { get; set; }
 
 		public void Init()
 		{
-			_buttonClick = _button.onClick.AsObservable().Where( _ => Enable );
-			IndexedClick = _buttonClick.Select( _ => Index );
+			ButtonClick = _button.onClick.AsObservable().Where( _ => Enable );
+			IndexedClick = ButtonClick.Select( _ => Index );
 		}
 
 		public void SetText( string t )

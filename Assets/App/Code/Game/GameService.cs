@@ -16,11 +16,8 @@
 		private string[] _currentWords;
 		private int _currentRightIndex;
 
-		public ReactiveCommand StopWithWin { get; } = new();
-		public ReactiveCommand StopWithLose { get; } = new();
-		public ReactiveCommand SpinStarted { get; } = new();
+		
 		public ReactiveCommand GameStarted { get; } = new();
-		public ReactiveCommand AnyRowTurnPassed { get; } = new();
 
 		public void Construct(GameView view, GameSettings settings) 
 		{
