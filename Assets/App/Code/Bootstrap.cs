@@ -31,16 +31,16 @@
 
 		private void Start()
 		{
+			_gameView.Construct( _gameSettings );
+			_gameView.Init();
+			_gameService.Construct( _gameView, _gameSettings );
+			
 			Initialize();
 
 			var prefsData = _playerPrefsSystem.Load();
 			var hasInternet = _internetStateService.Check();
 
 			HideVeil();
-
-			_gameView.Construct( _gameSettings );
-			_gameView.Init();
-			_gameService.Construct( _gameView, _gameSettings );
 
 			#if UNITY_EDITOR
 			if ( _forceGameStart )
