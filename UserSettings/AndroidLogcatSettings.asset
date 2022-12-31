@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "357a8c970804",
     "m_SelectedPackage": {
-        "deviceId": "emulator-5554",
+        "deviceId": "357a8c970804",
         "name": "pillo.kansino",
-        "processId": 10682,
+        "processId": 5769,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -31,6 +31,12 @@
             "name": "pillo.kansino",
             "processId": 17836,
             "exited": true
+        },
+        {
+            "deviceId": "357a8c970804",
+            "name": "pillo.kansino",
+            "processId": 5769,
+            "exited": false
         },
         {
             "deviceId": "emulator-5554",
