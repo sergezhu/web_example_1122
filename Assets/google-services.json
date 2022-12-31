@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "161160877234",
-    "project_id": "zhsekanz",
-    "storage_bucket": "zhsekanz.appspot.com"
+    "project_number": "36327652753",
+    "project_id": "juseidto",
+    "storage_bucket": "juseidto.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:161160877234:android:083c1d887b0d031c26e5ab",
+        "mobilesdk_app_id": "1:36327652753:android:7697e105bbd26f212cae30",
         "android_client_info": {
-          "package_name": "pillo.kansino"
+          "package_name": "ditobet.dito.bets"
         }
       },
       "oauth_client": [
         {
-          "client_id": "161160877234-unboujmot4crlli603463bk9on5s4pgl.apps.googleusercontent.com",
+          "client_id": "36327652753-m3d3a7oskgsc7mmh8h8ouq11jfn7v8pb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAb63xmHPCHvoPYyTLuvKxyTP5AMolxIDY"
+          "current_key": "AIzaSyCqYtyFT1c8siLFeAAvupm8p9us6Em1toc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "161160877234-unboujmot4crlli603463bk9on5s4pgl.apps.googleusercontent.com",
+              "client_id": "36327652753-m3d3a7oskgsc7mmh8h8ouq11jfn7v8pb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
