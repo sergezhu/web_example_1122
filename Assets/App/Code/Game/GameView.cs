@@ -7,6 +7,7 @@
 	using App.Code.UI;
 	using UniRx;
 	using UnityEngine;
+	using UnityEngine.Serialization;
 	using UnityEngine.UI;
 
 	public class GameView : BaseUIWindow
@@ -14,10 +15,9 @@
 		[SerializeField] private UINoInternetWarningWindow _noInternetWarningWindow;
 		[SerializeField] private UINoDataWarningWindow _noDataWarningWindow;
 
+		[FormerlySerializedAs( "_nextButton" )]
 		[Space]
-		[SerializeField] private GameObject _wordInfo;
-		[SerializeField] private List<WordButton> _wordButtons;
-		[SerializeField] private NextButton _nextButton;
+		[SerializeField] private PushButton _pushButton;
 		[SerializeField] private Button _exitButton;
 
 		[Space]
@@ -27,11 +27,8 @@
 		private GameSettings _settings;
 
 		public IObservable<Unit> NextButtonClick { get; private set; }
-		public IObservable<int> WordButtonClick { get; private set; }
 		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IObservable<Unit> AnyButtonClick { get; private set; }
-
-		public List<WordButton> WordButtons => _wordButtons;
 
 		public void Construct( GameSettings settings )
 		{
@@ -44,46 +41,24 @@
 
 			ExitButtonClick = _exitButton.onClick.AsObservable();
 			
-			_nextButton.Init();
-			NextButtonClick = _nextButton.ButtonClick;
-
-			_wordButtons.ForEach( b => b.Init() );
-			var wordIndexClicks = _wordButtons.Select( b => b.IndexedClick );
-			var wordNormalClicks = _wordButtons.Select( b => b.ButtonClick );
-			WordButtonClick = wordIndexClicks.Merge();
-
-			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick };
-			anyClicksObservables.AddRange( wordNormalClicks );
-			AnyButtonClick = anyClicksObservables.Merge();
+			_pushButton.Init();
+			NextButtonClick = _pushButton.ButtonClick;
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
 		}
 
-		public void EnableWordsButtons()
-		{
-			_wordButtons.ForEach( b => b.Enable = true );
-		}
-
-		public void DisableWordsButtons()
-		{
-			_wordButtons.ForEach( b => b.Enable = false );
-		}
-		
-
 		public void EnableNextButton()
 		{
-			_wordInfo.SetActive( false );
-			_nextButton.Enable = true;
-			_nextButton.gameObject.SetActive( true );
+			_pushButton.Enable = true;
+			_pushButton.gameObject.SetActive( true );
 			//_nextButton.SetSprite( _settings.NextDefaultState );
 		}
 
 		public void DisableNextButton()
 		{
-			_wordInfo.SetActive( true );
-			_nextButton.Enable = false;
-			_nextButton.gameObject.SetActive( false );
+			_pushButton.Enable = false;
+			_pushButton.gameObject.SetActive( false );
 			//_nextButton.SetSprite( _settings.NextInactiveState );
 		}
 

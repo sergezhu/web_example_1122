@@ -1,12 +1,11 @@
 ﻿namespace App.Code.Game
 {
 	using System;
-	using TMPro;
 	using UniRx;
 	using UnityEngine;
 	using UnityEngine.UI;
 
-	public class NextButton : MonoBehaviour
+	public class PushButton : MonoBehaviour
 	{
 		[SerializeField] private Button _button;
 		[SerializeField] private Image _img;
