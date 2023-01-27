@@ -5,5 +5,8 @@
 
 	public class GameSettings : MonoBehaviour
 	{
+		public float FallingKeglesDuration;
+		public float ResultShowDuration;
+		public double KegleFallDistance;
 	}
 }
