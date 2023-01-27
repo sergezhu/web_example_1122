@@ -21,7 +21,7 @@ public class Kegl : MonoBehaviour
     private GameSettings _settings;
     private Coroutine _routine;
 
-    private ReactiveProperty<bool> IsFault { get; } = new ReactiveProperty<bool>();
+    public ReactiveProperty<bool> IsFault { get; } = new ReactiveProperty<bool>();
 
     public void Construct(GameSettings settings)
     {
@@ -29,8 +29,8 @@ public class Kegl : MonoBehaviour
         _settings = settings;
         
         _groundLayerMask = LayerMask.GetMask( "Ground" );
-        _defaultPosition = _transform.position;
-        _defaultRotation = _transform.rotation;
+        _defaultPosition = _rb.position;
+        _defaultRotation = _rb.rotation;
 
         if ( Physics.Raycast( _groundDetectPoint.position, Vector3.down, out var hitInfo, _groundLayerMask ) )
             _defaultGroundDistance = hitInfo.distance;
@@ -44,9 +44,8 @@ public class Kegl : MonoBehaviour
     {
         IsFault.Value = false;
         
-        _transform.position = _defaultPosition;
-        _transform.rotation = _defaultRotation;
-
+        _rb.position = _defaultPosition;
+        _rb.rotation = _defaultRotation;
         _rb.velocity = Vector3.zero;
         
         StartGroundCheck();

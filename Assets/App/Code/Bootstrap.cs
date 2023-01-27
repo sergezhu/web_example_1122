@@ -17,6 +17,8 @@
 		[SerializeField] private AudioLibrary _audioLibrary;
 		[SerializeField] private WebView _webView;
 		[SerializeField] private GameObject _veil;
+		[SerializeField] private KeglesController _keglesController;
+
 
 		[Header( "Debug" )]
 		[SerializeField] private bool _clearPrefsWhenStart;
@@ -31,9 +33,11 @@
 
 		private void Start()
 		{
+			_keglesController.Construct( _gameSettings );
+			
 			_gameView.Construct( _gameSettings );
 			_gameView.Init();
-			_gameService.Construct( _gameView, _gameSettings );
+			_gameService.Construct( _gameView, _gameSettings, _keglesController );
 			
 			Initialize();
 
