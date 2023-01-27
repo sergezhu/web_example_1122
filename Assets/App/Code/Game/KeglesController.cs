@@ -37,6 +37,8 @@
 
 		public void Initialize()
 		{
+			UnlockEventFiring();
+			
 			KeglesFaultCount.Value = 0;
 			_kegles.ForEach( k => k.Initialize() );
 		}

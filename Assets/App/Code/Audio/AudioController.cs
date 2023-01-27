@@ -29,8 +29,8 @@
 
 		private void Subscribe()
 		{
-			_gameService.WordSelected
-				.Subscribe( v => OnWordSelected(v) )
+			_gameService.ResultReady
+				.Subscribe( v => OnResultReady(v) )
 				.AddTo( _disposables );
 
 			_gameView.AnyButtonClick
@@ -50,12 +50,12 @@
 				_lib.BgMusic.Stop();
 		}
 
-		private void OnWordSelected( bool v )
+		private void OnResultReady( bool v )
 		{
 			if(v)
-				PlayRightAnswer();
+				PlayWin();
 			else
-				PlayFailAnswer();
+				PlayLose();
 		}
 
 		private void PlayStart()
@@ -63,14 +63,14 @@
 			_lib.Start.Play();
 		}
 
-		private void PlayRightAnswer()
+		private void PlayWin()
 		{
-			_lib.RightAnswer.Play();
+			_lib.WinResult.Play();
 		}
 
-		private void PlayFailAnswer()
+		private void PlayLose()
 		{
-			_lib.FailAnswer.Play();
+			_lib.LoseResult.Play();
 		}
 
 		private void PlayClick()

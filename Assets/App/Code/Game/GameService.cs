@@ -16,7 +16,7 @@
 
 
 		public ReactiveCommand GameStarted { get; } = new();
-		public ReactiveCommand<bool> WordSelected { get; } = new();
+		public ReactiveCommand<bool> ResultReady { get; } = new();
 
 		public void Construct( GameView view, GameSettings settings, KeglesController keglesController ) 
 		{
@@ -53,6 +53,14 @@
 				.Subscribe( _ => OnFinished() )
 				.AddTo( this );
 
+			_view.BowlVeil.Closed
+				.Subscribe( _ => OnBowlVeilClosed() )
+				.AddTo( this );
+
+			_view.Ball.BallReverted
+				.Subscribe( _ => OnBallReverted() )
+				.AddTo( this );
+
 			StartGame();
 			GameStarted.Execute();
 		}
@@ -60,7 +68,7 @@
 		public void StartGame()
 		{
 			_keglesController.Initialize();
-			_keglesController.UnlockEventFiring();
+			_view.Ball.Initialize();
 			
 			_view.ShowArrowsBlock();
 			_view.EnablePushButton();
@@ -95,7 +103,7 @@
 
 		private void OnFinished()
 		{
-			
+			FinishAsync();
 		}
 
 		private async void FinishAsync()
@@ -108,17 +116,28 @@
 			
 			// handle win or lose
 			var isWin = _keglesController.KeglesFaultCount.Value >= _settings.WinKeglesCount;
-			var result = isWin ? "WIN" : "LOSE";
-			Debug.Log( result );
+			ResultReady.Execute( isWin );
+			
+			//var result = isWin ? "WIN" : "LOSE";
+			//Debug.Log( result );
 
 			var delayTask2= Task.Delay( TimeSpan.FromSeconds( _settings.ResultShowDuration ) );
 			await delayTask2;
 
+			// close veil
+			_view.BowlVeil.Close();
+		}
 
-			// show veil
-			// reset kegles
-			// start revert ball
-			// hide veil
+		private void OnBowlVeilClosed()
+		{
+			_keglesController.Initialize();
+			_view.Ball.Revert();
+			_view.BowlVeil.Open();
+		}
+
+		private void OnBallReverted()
+		{
+			StartGame();
 		}
 
 		private void CleanUp()

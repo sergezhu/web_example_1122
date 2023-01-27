@@ -1,13 +1,14 @@
 ﻿namespace App.Code.Audio
 {
 	using UnityEngine;
+	using UnityEngine.Serialization;
 
 	public class AudioLibrary : MonoBehaviour
 	{
 		public AudioSource BgMusic;
 		public AudioSource Start;
-		public AudioSource RightAnswer;
-		public AudioSource FailAnswer;
+		[FormerlySerializedAs( "RightAnswer" )] public AudioSource WinResult;
+		[FormerlySerializedAs( "FailAnswer" )] public AudioSource LoseResult;
 		public AudioSource Click;
 	}
 }

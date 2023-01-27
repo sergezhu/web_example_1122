@@ -1,4 +1,6 @@
 using System;
+using DG.Tweening;
+using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,9 +13,19 @@ public class Ball : MonoBehaviour
     [SerializeField] private float _minX;
     [SerializeField] private float _maxX;
     [SerializeField] private Rigidbody _rb;
+
+    [Header("Revert Settings")]
+    [SerializeField] private Transform _revertStartPointL;
+    [SerializeField] private Transform _revertFinishPointL;
+    [SerializeField] private Transform _revertStartPointR;
+    [SerializeField] private Transform _revertFinishPointR;
+    [SerializeField] private float _revertDuration = 5f;
     
     private bool _active;
     private Vector3 _defaultPosition;
+    private Tween _revertTween;
+
+    public ReactiveCommand BallReverted { get; } = new ReactiveCommand();
 
     public void Construct()
     {
@@ -43,6 +55,35 @@ public class Ball : MonoBehaviour
         _rb.AddTorque( _startTorque * randomForceFactor * Vector3.right );
 
         _active = true;
+    }
+
+    public void Revert()
+    {
+        _rb.isKinematic = true;
+        
+        var isLeft = transform.localPosition.x < 0;
+        var revertStartPoint = isLeft ? _revertStartPointL : _revertStartPointR;
+        var revertFinishPoint = isLeft ? _revertFinishPointL : _revertFinishPointR;
+        var dist = (revertFinishPoint.position - revertStartPoint.position).magnitude;
+
+        var size = transform.lossyScale.x;
+        var angleMaxRad = -2f * dist / size;
+
+        transform.position = revertStartPoint.position;
+        transform.rotation = Quaternion.identity;
+
+        _revertTween?.Kill();
+        _revertTween = DOVirtual.Float( 0, 1f, _revertDuration, value =>
+            {
+                transform.position = Vector3.Lerp( revertStartPoint.position, revertFinishPoint.position, value );
+                transform.rotation = Quaternion.Euler( value * angleMaxRad * Mathf.Rad2Deg, 0, 0 );
+            } )
+            .SetEase( Ease.Linear )
+            .OnComplete( () =>
+            {
+                _revertTween = null;
+                BallReverted.Execute();
+            } );
     }
 
     private void FixedUpdate()
