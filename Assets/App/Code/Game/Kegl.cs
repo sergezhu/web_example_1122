@@ -12,14 +12,18 @@ public class Kegl : MonoBehaviour
 
     [Header( "Debug" )]
     [SerializeField] private float _defaultGroundDistance;
+    [SerializeField] private float _fallGroundDistance;
+    [SerializeField] private float _currentGroundDistance;
     [SerializeField] private Vector3 _defaultPosition;
     [SerializeField] private Quaternion _defaultRotation;
+    [SerializeField] private bool _routineActive;
     
     private int _groundLayerMask;
     private Transform _transform;
     private WaitForSeconds _groundCheckWaiter;
     private GameSettings _settings;
     private Coroutine _routine;
+    private int _maxDistance;
 
     public ReactiveProperty<bool> IsFault { get; } = new ReactiveProperty<bool>();
 
@@ -28,12 +32,16 @@ public class Kegl : MonoBehaviour
         _transform = transform;
         _settings = settings;
         
-        _groundLayerMask = LayerMask.GetMask( "Ground" );
+        _groundLayerMask = LayerMask.GetMask( "Boundary" );
+        _maxDistance = 5;
         _defaultPosition = _rb.position;
         _defaultRotation = _rb.rotation;
 
-        if ( Physics.Raycast( _groundDetectPoint.position, Vector3.down, out var hitInfo, _groundLayerMask ) )
-            _defaultGroundDistance = hitInfo.distance;
+        if ( Physics.Raycast( _groundDetectPoint.position, Vector3.down, out var hitInfo, _maxDistance, _groundLayerMask ) )
+        {
+            _defaultGroundDistance = _groundDetectPoint.position.y - hitInfo.point.y;
+            _fallGroundDistance = _defaultGroundDistance * _settings.KegleFallDistanceFactor;
+        }
         else
             Debug.LogWarning( $"Ground not found" );
 
@@ -57,6 +65,7 @@ public class Kegl : MonoBehaviour
             return;
         
         _routine = StartCoroutine( GroundCheckRoutine() );
+        _routineActive = true;
     }
 
     private void StopGroundCheck()
@@ -65,6 +74,7 @@ public class Kegl : MonoBehaviour
             return;
 
         StopCoroutine( _routine );
+        _routineActive = false;
     }
 
     private IEnumerator GroundCheckRoutine()
@@ -78,9 +88,13 @@ public class Kegl : MonoBehaviour
 
     private void GroundCheck()
     {
-        if ( Physics.Raycast( _groundDetectPoint.position, Vector3.down, out var hitInfo, _groundLayerMask ) )
+        if ( Physics.Raycast( _groundDetectPoint.position, Vector3.down, out var hitInfo, _maxDistance, _groundLayerMask ) )
         {
-            if ( hitInfo.distance <= _settings.KegleFallDistance )
+            _currentGroundDistance = _groundDetectPoint.position.y - hitInfo.point.y;
+            
+            Debug.DrawLine( _groundDetectPoint.position, _groundDetectPoint.position + _currentGroundDistance * Vector3.down, Color.red, 1f );
+            
+            if ( _currentGroundDistance <= _fallGroundDistance )
             {
                 IsFault.Value = true;
                 StopGroundCheck();

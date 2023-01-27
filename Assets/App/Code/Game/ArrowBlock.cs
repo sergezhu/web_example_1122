@@ -18,6 +18,8 @@
 		private Tween _pointerAnimation;
 		private float _currentPointerProgress;
 
+		public float CurrentPointerProgress => _currentPointerProgress;
+
 		public void Show()
 		{
 			StartPointerAnimation();
@@ -47,7 +49,7 @@
 					_currentPointerProgress = value;
 					_pointerTransform.position = Vector3.Lerp( _leftPoint.position, _rightPoint.position, value );
 				} )
-				.SetEase( Ease.OutCubic )
+				.SetEase( Ease.InOutCubic )
 				.SetLoops( -1, LoopType.Yoyo );
 		}
 

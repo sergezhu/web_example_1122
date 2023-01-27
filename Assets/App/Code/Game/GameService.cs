@@ -60,6 +60,9 @@
 			
 			_view.HideArrowsBlock();
 			_view.DisablePushButton();
+
+			var pointerPos = _view.ArrowsBlock.CurrentPointerProgress;
+			_view.Ball.SetPosition( pointerPos );
 			_view.Ball.Push();
 		}
 		

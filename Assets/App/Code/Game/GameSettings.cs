@@ -7,6 +7,6 @@
 	{
 		public float FallingKeglesDuration;
 		public float ResultShowDuration;
-		public double KegleFallDistance;
+		public float KegleFallDistanceFactor = 0.5f;
 	}
 }

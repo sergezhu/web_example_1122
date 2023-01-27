@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
 	using App.Code.FX;
 	using App.Code.UI;
 	using UniRx;
@@ -37,6 +36,7 @@
 		public IObservable<Unit> AnyButtonClick { get; private set; }
 		public LedView LedView => _ledView;
 		public Ball Ball => _ball;
+		public ArrowBlock ArrowsBlock => _arrowBlock;
 
 		public void Construct( GameSettings settings )
 		{

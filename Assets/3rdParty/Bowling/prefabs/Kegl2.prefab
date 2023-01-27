@@ -322,7 +322,7 @@ MonoBehaviour:
   _centerOfMass: {fileID: 7595005233878768780}
   _groundDetectPoint: {fileID: 4962095000203680660}
   _rb: {fileID: 1256490428204700021}
-  _defaultGroundDistance: 0
+  _defaultGroundDistance: 0.5
   _defaultPosition: {x: 0, y: 0, z: 0}
   _defaultRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &9204045264285903638
