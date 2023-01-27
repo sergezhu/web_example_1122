@@ -24,18 +24,20 @@ public class Ball : MonoBehaviour
     private bool _active;
     private Vector3 _defaultPosition;
     private Tween _revertTween;
+    private Transform _transform;
 
     public ReactiveCommand BallReverted { get; } = new ReactiveCommand();
 
     public void Construct()
     {
-        _defaultPosition = _rb.position;
+        _transform = transform;
+        _defaultPosition = _transform.localPosition;
     }
 
     public void Initialize()
     {
         _rb.isKinematic = true;
-        _rb.position = _defaultPosition;
+        _transform.localPosition = _defaultPosition;
     }
 
     public void SetPosition( float arrowPosition )
