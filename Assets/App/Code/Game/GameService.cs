@@ -13,6 +13,8 @@
 		private bool _isWin;
 		private int _currentRightIndex;
 		private KeglesController _keglesController;
+		private bool _finishedFlag;
+		private bool _nearFinishedFlag;
 
 
 		public ReactiveCommand GameStarted { get; } = new();
@@ -67,6 +69,9 @@
 
 		public void StartGame()
 		{
+			_finishedFlag = false;
+			_nearFinishedFlag = false;
+			
 			_keglesController.Initialize();
 			_view.Ball.Initialize();
 			
@@ -103,6 +108,10 @@
 
 		private void OnFinished()
 		{
+			if(_finishedFlag)
+				return;
+
+			_finishedFlag = true;
 			FinishAsync();
 		}
 
@@ -118,8 +127,8 @@
 			var isWin = _keglesController.KeglesFaultCount.Value >= _settings.WinKeglesCount;
 			ResultReady.Execute( isWin );
 			
-			//var result = isWin ? "WIN" : "LOSE";
-			//Debug.Log( result );
+			var result = isWin ? "WIN" : "LOSE";
+			Debug.Log( result );
 
 			var delayTask2= Task.Delay( TimeSpan.FromSeconds( _settings.ResultShowDuration ) );
 			await delayTask2;
@@ -130,6 +139,7 @@
 
 		private void OnBowlVeilClosed()
 		{
+			_keglesController.ResetPositions();
 			_view.Ball.Revert();
 			_view.BowlVeil.Open();
 		}

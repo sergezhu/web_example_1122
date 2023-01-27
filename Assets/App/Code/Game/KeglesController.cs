@@ -44,6 +44,11 @@
 			_kegles.ForEach( k => k.Initialize() );
 		}
 
+		public void ResetPositions()
+		{
+			_kegles.ForEach( k => k.ResetPosition() );
+		}
+
 		public void CleanUp()
 		{
 			_kegles.ForEach( k => k.CleanUp() );

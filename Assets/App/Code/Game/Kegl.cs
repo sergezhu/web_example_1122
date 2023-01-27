@@ -51,12 +51,14 @@ public class Kegl : MonoBehaviour
     public void Initialize()
     {
         IsFault.Value = false;
-        
+        StartGroundCheck();
+    }
+
+    public void ResetPosition()
+    {
         _rb.position = _defaultPosition;
         _rb.rotation = _defaultRotation;
         _rb.velocity = Vector3.zero;
-        
-        StartGroundCheck();
     }
 
     public void CleanUp()
