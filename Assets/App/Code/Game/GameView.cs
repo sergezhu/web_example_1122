@@ -60,14 +60,14 @@
 			_noInternetWarningWindow.Init();
 		}
 
-		public void EnableNextButton()
+		public void EnablePushButton()
 		{
 			_pushButton.Enable = true;
 			_pushButton.gameObject.SetActive( true );
 			//_nextButton.SetSprite( _settings.NextDefaultState );
 		}
 
-		public void DisableNextButton()
+		public void DisablePushButton()
 		{
 			_pushButton.Enable = false;
 			_pushButton.gameObject.SetActive( false );

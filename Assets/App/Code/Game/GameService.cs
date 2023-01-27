@@ -51,6 +51,7 @@
 		{
 			_keglesController.Initialize();
 			_view.ShowArrowsBlock();
+			_view.EnablePushButton();
 		}
 
 		private void OnPushButtonClick()
@@ -58,6 +59,7 @@
 			Debug.Log( "PUSH" );
 			
 			_view.HideArrowsBlock();
+			_view.DisablePushButton();
 			_view.Ball.Push();
 		}
 		
