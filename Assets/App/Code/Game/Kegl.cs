@@ -59,6 +59,11 @@ public class Kegl : MonoBehaviour
         StartGroundCheck();
     }
 
+    public void CleanUp()
+    {
+        StopGroundCheck();
+    }
+
     private void StartGroundCheck()
     {
         if ( _routine != null )
@@ -74,6 +79,7 @@ public class Kegl : MonoBehaviour
             return;
 
         StopCoroutine( _routine );
+        _routine = null;
         _routineActive = false;
     }
 

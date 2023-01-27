@@ -9,7 +9,6 @@
 		[SerializeField] private List<Kegl> _kegles;
 		
 		private GameSettings _settings;
-		private CompositeDisposable _disposables;
 		private bool _isLockEventFiring;
 
 		private bool IsLockEventFiring => _isLockEventFiring;
@@ -20,7 +19,6 @@
 		public void Construct( GameSettings settings )
 		{
 			_settings = settings;
-			_disposables = new CompositeDisposable();
 			
 			_kegles.ForEach( k => k.Construct( settings ) );
 
@@ -29,18 +27,26 @@
 			_kegles.ForEach( k =>
 			{
 				k.IsFault
-					.Where( _ => IsLockEventFiring == false )
-					.Subscribe( _ => KeglesFaultCount.Value += 1 )
-					.AddTo( _disposables );
+					.Where( v => v && IsLockEventFiring == false )
+					.Subscribe( _ =>
+					{
+						Debug.Log( $"{k.name} isFault = {k.IsFault.Value}" );
+						KeglesFaultCount.Value += 1;
+					} )
+					.AddTo( this );
 			} );
 		}
 
 		public void Initialize()
 		{
 			UnlockEventFiring();
-			
 			KeglesFaultCount.Value = 0;
 			_kegles.ForEach( k => k.Initialize() );
+		}
+
+		public void CleanUp()
+		{
+			_kegles.ForEach( k => k.CleanUp() );
 		}
 
 		public void LockEventFiring()

@@ -36,6 +36,15 @@
 			_gameView.AnyButtonClick
 				.Subscribe( _ => PlayClick() )
 				.AddTo( _disposables );
+
+			_gameView.Ball.BallHit
+				.Subscribe( tuple => OnBallHit( tuple ) )
+				.AddTo( _disposables );
+		}
+
+		private void OnBallHit( (float, float) tuple )
+		{
+			PlayHit( tuple.Item1, tuple.Item2 );
 		}
 
 		private void PlayBGMusic()
@@ -76,6 +85,13 @@
 		private void PlayClick()
 		{
 			_lib.Click.Play();
+		}
+
+		private void PlayHit(float volume, float tone)
+		{
+			_lib.Hit.volume = volume;
+			_lib.Hit.pitch = tone;
+			_lib.Hit.Play();
 		}
 	}
 }

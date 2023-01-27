@@ -26,7 +26,11 @@ public class Ball : MonoBehaviour
     private Tween _revertTween;
     private Transform _transform;
 
+    public const int BoundaryLayer = 12;
+    public const int KegleLayer = 9;
+
     public ReactiveCommand BallReverted { get; } = new ReactiveCommand();
+    public ReactiveCommand<(float, float)> BallHit { get; } = new ReactiveCommand<(float, float)>();
 
     public void Construct()
     {
@@ -86,6 +90,19 @@ public class Ball : MonoBehaviour
                 _revertTween = null;
                 BallReverted.Execute();
             } );
+    }
+
+    private void OnCollisionEnter( Collision collision )
+    {
+        var go = collision.gameObject;
+
+        if ( go.layer == KegleLayer || go.layer == BoundaryLayer )
+        {
+            var force = Mathf.Clamp(collision.impulse.sqrMagnitude, 0, 1f);
+            var tone = go.layer == KegleLayer ? 4 : 1;
+
+            BallHit.Execute( (force, tone) );
+        }
     }
 
     private void FixedUpdate()

@@ -10,5 +10,6 @@
 		[FormerlySerializedAs( "RightAnswer" )] public AudioSource WinResult;
 		[FormerlySerializedAs( "FailAnswer" )] public AudioSource LoseResult;
 		public AudioSource Click;
+		public AudioSource Hit;
 	}
 }

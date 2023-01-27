@@ -130,18 +130,19 @@
 
 		private void OnBowlVeilClosed()
 		{
-			_keglesController.Initialize();
 			_view.Ball.Revert();
 			_view.BowlVeil.Open();
 		}
 
 		private void OnBallReverted()
 		{
+			CleanUp();
 			StartGame();
 		}
 
 		private void CleanUp()
 		{
+			_keglesController.CleanUp();
 		}
 	}
 }
