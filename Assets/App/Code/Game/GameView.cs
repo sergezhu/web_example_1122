@@ -20,9 +20,15 @@
 		[SerializeField] private Button _exitButton;
 
 		[Space]
+		[SerializeField] private AreaTrigger _finishTrigger;
+		[SerializeField] private AreaTrigger _nearFinishTrigger;
+
+		[Space]
 		[SerializeField] private LedView _ledView;
 		[SerializeField] private ArrowBlock _arrowBlock;
 		[SerializeField] private Ball _ball;
+		[SerializeField] private BowlVeil _bowlVeil;
+		
 
 		[Space]
 		[SerializeField] private FXWrapper _coinsLeftFX;
@@ -34,14 +40,19 @@
 		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IObservable<Unit> PushButtonClick { get; private set; }
 		public IObservable<Unit> AnyButtonClick { get; private set; }
+		public IObservable<bool> NearFinishEnter { get; private set; }
+		public IObservable<bool> FinishEnter { get; private set; }
 		public LedView LedView => _ledView;
 		public Ball Ball => _ball;
 		public ArrowBlock ArrowsBlock => _arrowBlock;
+		public BowlVeil BowlVeil => _bowlVeil;
 
 		public void Construct( GameSettings settings )
 		{
 			_settings = settings;
 			_ball.Construct();
+			_ledView.Construct( settings );
+			_arrowBlock.Construct( settings );
 		}
 
 		public override void Init()
@@ -55,6 +66,9 @@
 
 			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, PushButtonClick };
 			AnyButtonClick = anyClicksObservables.Merge();
+
+			NearFinishEnter = _nearFinishTrigger.IsInside.Where( v => v );
+			FinishEnter = _finishTrigger.IsInside.Where( v => v );
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();

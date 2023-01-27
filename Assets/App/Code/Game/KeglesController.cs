@@ -10,6 +10,9 @@
 		
 		private GameSettings _settings;
 		private CompositeDisposable _disposables;
+		private bool _isLockEventFiring;
+
+		private bool IsLockEventFiring => _isLockEventFiring;
 
 		public int KeglesCount { get; private set; }
 		public ReactiveProperty<int> KeglesFaultCount { get; } = new ReactiveProperty<int>();
@@ -26,6 +29,7 @@
 			_kegles.ForEach( k =>
 			{
 				k.IsFault
+					.Where( _ => IsLockEventFiring == false )
 					.Subscribe( _ => KeglesFaultCount.Value += 1 )
 					.AddTo( _disposables );
 			} );
@@ -34,8 +38,17 @@
 		public void Initialize()
 		{
 			KeglesFaultCount.Value = 0;
-			
 			_kegles.ForEach( k => k.Initialize() );
+		}
+
+		public void LockEventFiring()
+		{
+			_isLockEventFiring = true;
+		}
+
+		public void UnlockEventFiring()
+		{
+			_isLockEventFiring = false;
 		}
 	}
 }

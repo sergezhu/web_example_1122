@@ -1,5 +1,7 @@
 ﻿namespace App.Code.Game
 {
+	using System;
+	using System.Threading.Tasks;
 	using UniRx;
 	using UnityEngine;
 
@@ -43,6 +45,14 @@
 				.Subscribe( v => OnKeglesFaultCount( v ) )
 				.AddTo( this );
 
+			_view.NearFinishEnter
+				.Subscribe( _ => OnNearFinished() )
+				.AddTo( this );
+
+			_view.FinishEnter
+				.Subscribe( _ => OnFinished() )
+				.AddTo( this );
+
 			StartGame();
 			GameStarted.Execute();
 		}
@@ -50,6 +60,8 @@
 		public void StartGame()
 		{
 			_keglesController.Initialize();
+			_keglesController.UnlockEventFiring();
+			
 			_view.ShowArrowsBlock();
 			_view.EnablePushButton();
 		}
@@ -65,7 +77,7 @@
 			_view.Ball.SetPosition( pointerPos );
 			_view.Ball.Push();
 		}
-		
+
 		private void OnNextButtonClick()
 		{
 			CleanUp();
@@ -75,6 +87,38 @@
 		private void OnKeglesFaultCount( int value )
 		{
 			_view.LedView.SetScores( value, _keglesController.KeglesCount );
+		}
+
+		private void OnNearFinished()
+		{
+		}
+
+		private void OnFinished()
+		{
+			
+		}
+
+		private async void FinishAsync()
+		{
+			var delayTask1 = Task.Delay( TimeSpan.FromSeconds( _settings.FallingKeglesDuration ) );
+			await delayTask1;
+
+			// lock kegles
+			_keglesController.LockEventFiring();
+			
+			// handle win or lose
+			var isWin = _keglesController.KeglesFaultCount.Value >= _settings.WinKeglesCount;
+			var result = isWin ? "WIN" : "LOSE";
+			Debug.Log( result );
+
+			var delayTask2= Task.Delay( TimeSpan.FromSeconds( _settings.ResultShowDuration ) );
+			await delayTask2;
+
+
+			// show veil
+			// reset kegles
+			// start revert ball
+			// hide veil
 		}
 
 		private void CleanUp()

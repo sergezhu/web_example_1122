@@ -17,8 +17,14 @@
 		private Tween _fadeAnimation;
 		private Tween _pointerAnimation;
 		private float _currentPointerProgress;
+		private GameSettings _settings;
 
 		public float CurrentPointerProgress => _currentPointerProgress;
+
+		public void Construct( GameSettings settings )
+		{
+			_settings = settings;
+		}
 
 		public void Show()
 		{

@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 35337831}
   - component: {fileID: 35337830}
   - component: {fileID: 35337829}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NearFinishTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 102342166}
   - component: {fileID: 102342165}
   - component: {fileID: 102342164}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FinishTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
