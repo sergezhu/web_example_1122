@@ -9,8 +9,9 @@
 	using UnityEngine.Serialization;
 	using UnityEngine.UI;
 
-	public class GameView : BaseUIWindow
+	public class GameView : MonoBehaviour
 	{
+		[SerializeField] private GameObject _gameCanvasRoot;
 		[SerializeField] private UINoInternetWarningWindow _noInternetWarningWindow;
 		[SerializeField] private UINoDataWarningWindow _noDataWarningWindow;
 
@@ -55,7 +56,7 @@
 			_arrowBlock.Construct( settings );
 		}
 
-		public override void Init()
+		public void Init()
 		{
 			Hide();
 
@@ -72,6 +73,18 @@
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
+		}
+
+		public void Hide()
+		{
+			gameObject.SetActive( false );
+			_gameCanvasRoot.gameObject.SetActive( false );
+		}
+
+		public void Show()
+		{
+			gameObject.SetActive( true );
+			_gameCanvasRoot.gameObject.SetActive( true );
 		}
 
 		public void EnablePushButton()

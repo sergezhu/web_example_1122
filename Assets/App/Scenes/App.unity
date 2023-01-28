@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf4b9e5455947f38c6e8b00f55ea9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameCanvasRoot: {fileID: 1723135651}
   _noInternetWarningWindow: {fileID: 799434363}
   _noDataWarningWindow: {fileID: 0}
   _pushButton: {fileID: 1757360288}
