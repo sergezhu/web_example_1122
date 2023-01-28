@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
-  <string name="gcm_defaultSenderId" translatable="false">36327652753</string>
-  <string name="google_storage_bucket" translatable="false">juseidto.appspot.com</string>
-  <string name="project_id" translatable="false">juseidto</string>
-  <string name="google_api_key" translatable="false">AIzaSyCqYtyFT1c8siLFeAAvupm8p9us6Em1toc</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCqYtyFT1c8siLFeAAvupm8p9us6Em1toc</string>
-  <string name="google_app_id" translatable="false">1:36327652753:android:7697e105bbd26f212cae30</string>
-  <string name="default_web_client_id" translatable="false">36327652753-m3d3a7oskgsc7mmh8h8ouq11jfn7v8pb.apps.googleusercontent.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">1029741159749</string>
+  <string name="google_storage_bucket" translatable="false">sechuluu.appspot.com</string>
+  <string name="project_id" translatable="false">sechuluu</string>
+  <string name="google_api_key" translatable="false">AIzaSyCMBBuHwNKH7XUte4vBEyowid29N0ccjS8</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCMBBuHwNKH7XUte4vBEyowid29N0ccjS8</string>
+  <string name="google_app_id" translatable="false">1:1029741159749:android:096a29345d7840565c4a2c</string>
+  <string name="default_web_client_id" translatable="false">1029741159749-jj51llq0pektshvgpdjb5klk1uqrqj5i.apps.googleusercontent.com</string>
 </resources>

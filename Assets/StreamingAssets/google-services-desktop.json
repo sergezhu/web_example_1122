@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "36327652753",
-    "project_id": "juseidto",
-    "storage_bucket": "juseidto.appspot.com"
+    "project_number": "1029741159749",
+    "project_id": "sechuluu",
+    "storage_bucket": "sechuluu.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:36327652753:android:7697e105bbd26f212cae30",
+        "mobilesdk_app_id": "1:1029741159749:android:096a29345d7840565c4a2c",
         "android_client_info": {
-          "package_name": "ditobet.dito.bets"
+          "package_name": "bouling.games"
         }
       },
       "oauth_client": [
         {
-          "client_id": "36327652753-m3d3a7oskgsc7mmh8h8ouq11jfn7v8pb.apps.googleusercontent.com",
+          "client_id": "1029741159749-jj51llq0pektshvgpdjb5klk1uqrqj5i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCqYtyFT1c8siLFeAAvupm8p9us6Em1toc"
+          "current_key": "AIzaSyCMBBuHwNKH7XUte4vBEyowid29N0ccjS8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "36327652753-m3d3a7oskgsc7mmh8h8ouq11jfn7v8pb.apps.googleusercontent.com",
+              "client_id": "1029741159749-jj51llq0pektshvgpdjb5klk1uqrqj5i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
