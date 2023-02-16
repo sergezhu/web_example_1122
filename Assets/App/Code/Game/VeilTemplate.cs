@@ -4,7 +4,7 @@
 	using UniRx;
 	using UnityEngine;
 
-	public class BowlVeil : MonoBehaviour
+	public class VeilTemplate : MonoBehaviour
 	{
 		[SerializeField] private float _openPositionY;
 		[SerializeField] private float _closePositionY;

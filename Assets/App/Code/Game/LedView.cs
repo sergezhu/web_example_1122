@@ -13,12 +13,9 @@
 			_settings = settings;
 		}
 
-		public void SetScores( int current, int max )
+		public void SetScores( int left, int right )
 		{
-			var scoreColor = current >= _settings.WinKeglesCount ? Color.green : Color.red;
-			_scoresText.color = scoreColor;
-			
-			_scoresText.text = $"{current} / {max}";
+			_scoresText.text = $"{left} : {right}";
 		}
 	}
 }

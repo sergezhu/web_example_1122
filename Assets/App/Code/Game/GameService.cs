@@ -12,7 +12,6 @@
 		private int _comboOffset;
 		private bool _isWin;
 		private int _currentRightIndex;
-		private KeglesController _keglesController;
 		private bool _finishedFlag;
 		private bool _nearFinishedFlag;
 
@@ -20,47 +19,22 @@
 		public ReactiveCommand GameStarted { get; } = new();
 		public ReactiveCommand<bool> ResultReady { get; } = new();
 
-		public void Construct( GameView view, GameSettings settings, KeglesController keglesController ) 
+		public void Construct( GameView view, GameSettings settings ) 
 		{
 			_view = view;
 			_settings = settings;
-			_keglesController = keglesController;
 		} 
 
 		public void Run()
 		{
 			_view.Show();
 			
-			/*_view.NextButtonClick
+			_view.NextButtonClick
 				.Subscribe( _ => OnNextButtonClick())
-				.AddTo( this );*/
-			
-			_view.PushButtonClick
-				.Subscribe( _ => OnPushButtonClick())
 				.AddTo( this );
 
 			_view.ExitButtonClick
 				.Subscribe( _ => Application.Quit() )
-				.AddTo( this );
-
-			_keglesController.KeglesFaultCount
-				.Subscribe( v => OnKeglesFaultCount( v ) )
-				.AddTo( this );
-
-			_view.NearFinishEnter
-				.Subscribe( _ => OnNearFinished() )
-				.AddTo( this );
-
-			_view.FinishEnter
-				.Subscribe( _ => OnFinished() )
-				.AddTo( this );
-
-			_view.BowlVeil.Closed
-				.Subscribe( _ => OnBowlVeilClosed() )
-				.AddTo( this );
-
-			_view.Ball.BallReverted
-				.Subscribe( _ => OnBallReverted() )
 				.AddTo( this );
 
 			StartGame();
@@ -72,87 +46,24 @@
 			_finishedFlag = false;
 			_nearFinishedFlag = false;
 			
-			_keglesController.Initialize();
-			_view.Ball.Initialize();
-			
-			_view.ShowArrowsBlock();
-			_view.EnablePushButton();
-		}
-
-		private void OnPushButtonClick()
-		{
-			Debug.Log( "PUSH" );
-			
-			_view.HideArrowsBlock();
-			_view.DisablePushButton();
-
-			var pointerPos = _view.ArrowsBlock.CurrentPointerProgress;
-			_view.Ball.SetPosition( pointerPos );
-			_view.Ball.Push();
+			_view.EnableNextButton();
 		}
 
 		private void OnNextButtonClick()
 		{
+			_view.DisableNextButton();
+
 			CleanUp();
 			StartGame();
 		}
 
-		private void OnKeglesFaultCount( int value )
-		{
-			_view.LedView.SetScores( value, _keglesController.KeglesCount );
-		}
 
 		private void OnNearFinished()
 		{
 		}
 
-		private void OnFinished()
-		{
-			if(_finishedFlag)
-				return;
-
-			_finishedFlag = true;
-			FinishAsync();
-		}
-
-		private async void FinishAsync()
-		{
-			var delayTask1 = Task.Delay( TimeSpan.FromSeconds( _settings.FallingKeglesDuration ) );
-			await delayTask1;
-
-			// lock kegles
-			_keglesController.LockEventFiring();
-			
-			// handle win or lose
-			var isWin = _keglesController.KeglesFaultCount.Value >= _settings.WinKeglesCount;
-			ResultReady.Execute( isWin );
-			
-			var result = isWin ? "WIN" : "LOSE";
-			Debug.Log( result );
-
-			var delayTask2= Task.Delay( TimeSpan.FromSeconds( _settings.ResultShowDuration ) );
-			await delayTask2;
-
-			// close veil
-			_view.BowlVeil.Close();
-		}
-
-		private void OnBowlVeilClosed()
-		{
-			_keglesController.ResetPositions();
-			_view.Ball.Revert();
-			_view.BowlVeil.Open();
-		}
-
-		private void OnBallReverted()
-		{
-			CleanUp();
-			StartGame();
-		}
-
 		private void CleanUp()
 		{
-			_keglesController.CleanUp();
 		}
 	}
 }

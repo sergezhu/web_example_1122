@@ -36,10 +36,6 @@
 			_gameView.AnyButtonClick
 				.Subscribe( _ => PlayClick() )
 				.AddTo( _disposables );
-
-			_gameView.Ball.BallHit
-				.Subscribe( tuple => OnBallHit( tuple ) )
-				.AddTo( _disposables );
 		}
 
 		private void OnBallHit( (float, float) tuple )
