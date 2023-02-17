@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: ac085ef3cec9a5d489a3e0ac68092cbc
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Heading Compressed Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: fa26fccb263514348936a43a3049a4d3, type: 3}
+  - {fileID: 12800000, guid: 41541be991a1b6e43b4bf9f53d8c7aeb, type: 3}
+  - {fileID: 12800000, guid: c831934692c20ac448f5b822c7e45e13, type: 3}
+  - {fileID: 12800000, guid: c4f18ad6605b8144096d3b36111946b5, type: 3}
+  - {fileID: 12800000, guid: 652be458e3e87224ebf78c7cc693216e, type: 3}
+  - {fileID: 12800000, guid: d421ef59163ea654d8efa2bcd02e60eb, type: 3}
+  - {fileID: 12800000, guid: 34997491f0e48d747ba0e8f2af98e40d, type: 3}
+  - {fileID: 12800000, guid: 1ab468208fa86df46a8bfb79e776c4fc, type: 3}
+  - {fileID: 12800000, guid: 0ba88f0e218499a4197277910e6edcf3, type: 3}
+  - {fileID: 12800000, guid: 9055fdff150e6f74b9657cb0c8029648, type: 3}
+  - {fileID: 12800000, guid: 137a67b0393d82343b0eb20c9405350f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

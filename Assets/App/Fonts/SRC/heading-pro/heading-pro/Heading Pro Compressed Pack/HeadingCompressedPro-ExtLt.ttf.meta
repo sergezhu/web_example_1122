@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 137a67b0393d82343b0eb20c9405350f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Heading Compressed Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 41541be991a1b6e43b4bf9f53d8c7aeb, type: 3}
+  - {fileID: 12800000, guid: 9055fdff150e6f74b9657cb0c8029648, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

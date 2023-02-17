@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 57c22f174f7197a4ba92e18737ffa9b7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Heading Smallcase Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2557c854171fd13458fe88f5c3406035, type: 3}
+  - {fileID: 12800000, guid: d67ca58f4ae31464698c4fac39a46873, type: 3}
+  - {fileID: 12800000, guid: 16bf37270229f784aaf41b77686c891d, type: 3}
+  - {fileID: 12800000, guid: 645fcdc87d3054d4286233ed85dcfd90, type: 3}
+  - {fileID: 12800000, guid: 305a87f6e2db73f4aa51da1a0aabbc8c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
