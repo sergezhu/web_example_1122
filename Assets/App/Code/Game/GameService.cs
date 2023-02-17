@@ -105,6 +105,8 @@
 
 		private void OnNextButtonClick()
 		{
+			Debug.Log( "Next" );
+			
 			_view.DisableNextButton();
 
 			CleanUp();
@@ -129,7 +131,6 @@
 			_view.MatchView.UpdateMatchTime( 0, matchDuration );
 			_view.MatchView.SetLeftScore( 0 );
 			_view.MatchView.SetRightScore( 0 );
-			_view.MatchView.ResetColors();
 
 			await Task.Delay( TimeSpan.FromSeconds( _settings.DelayBeforeMatch ) );
 
@@ -273,6 +274,7 @@
 			winStatus = IsWin ? 1 : winStatus;
 			winStatus = IsLose ? -1 : winStatus;
 			
+			_view.SwitchToResultView();
 			_view.MatchView.ShowResultText( _view.BetView.BetCommand, winStatus );
 		}
 

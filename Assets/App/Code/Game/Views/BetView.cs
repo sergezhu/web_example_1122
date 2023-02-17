@@ -30,8 +30,12 @@
 			RightCommandSelect
 				.Subscribe( _ => DoSelectRight() )
 				.AddTo( this );
+		}
 
-			DoSelectLeft();
+		public void ResetCheckboxes()
+		{
+			_leftSelect.IsSelected.Value = false;
+			_rightSelect.IsSelected.Value = false;
 		}
 
 		private void DoSelectRight()

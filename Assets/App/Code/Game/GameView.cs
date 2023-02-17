@@ -77,11 +77,19 @@
 			_betView.Initialize();
 			
 			_betView.LeftCommandSelect
-				.Subscribe( _ => _matchView.SetBetCommand( ECommand.Left ) )
+				.Subscribe( _ =>
+				{
+					_matchView.SetBetCommand( ECommand.Left );
+					_startButton.Enable = true;
+				} )
 				.AddTo( this );
 
 			_betView.RightCommandSelect
-				.Subscribe( _ => _matchView.SetBetCommand( ECommand.Right ) )
+				.Subscribe( _ =>
+				{
+					_matchView.SetBetCommand( ECommand.Right );
+					_startButton.Enable = true;
+				} )
 				.AddTo( this );
 			
 			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick, StartButtonClick, _betView.LeftCommandSelect, _betView.RightCommandSelect };
@@ -127,11 +135,14 @@
 		public void SwitchToBetSView()
 		{
 			BetView.Enable();
+			BetView.ResetCheckboxes();
+			
 			FlagsView.Disable();
 			MatchView.Disable();
 			//_view.ResultView.Disable();
 
 			_startButton.Enable();
+			_startButton.Enable = false;
 			_nextButton.Disable();
 			
 			_hintText.Enable();
@@ -150,19 +161,24 @@
 
 			_hintText.Enable();
 			_hintText.text = "Match is going...";
+
+			MatchView.ResetColors();
+			MatchView.ShowSecondsMeter();
+			MatchView.HideResultText();
 		}
 
 		public void SwitchToResultView()
 		{
 			BetView.Disable();
 			FlagsView.Enable();
-			MatchView.Disable();
-			ResultView.Enable();
+			MatchView.Enable();
 
 			_startButton.Disable();
 			_nextButton.Enable();
+			EnableNextButton();
 
 			_hintText.Disable();
+			_matchView.HideSecondsMeter();
 		}
 
 		/*public void SetCoinsEmission( float value )

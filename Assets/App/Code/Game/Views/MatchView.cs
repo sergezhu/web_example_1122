@@ -1,6 +1,5 @@
 ﻿namespace App.Code.Game
 {
-	using System;
 	using App.Code.Game.Enums;
 	using App.Code.Utils;
 	using TMPro;
@@ -16,7 +15,7 @@
 		[SerializeField] private GameObject _secondsMeter;
 		[SerializeField] private TextMeshProUGUI _winText;
 		[SerializeField] private TextMeshProUGUI _loseText;
-		[SerializeField] private TextMeshProUGUI _standoffText;
+		[SerializeField] private TextMeshProUGUI _nosidesText;
 
 		[Space]
 		[SerializeField] private Transform _timeArrow;
@@ -62,19 +61,22 @@
 				case -1:
 					_winText.Disable();
 					_loseText.Enable();
-					_standoffText.Disable();
+					_loseText.color = _loseColor;
+					_nosidesText.Disable();
 					break;
 				
 				case 0:
 					_winText.Disable();
 					_loseText.Disable();
-					_standoffText.Enable();
+					_nosidesText.Enable();
+					_nosidesText.color = _defaultColor;
 					break;
 				
 				case 1:
 					_winText.Enable();
+					_winText.color = _winColor;
 					_loseText.Disable();
-					_standoffText.Disable();
+					_nosidesText.Disable();
 					break;
 			}
 
@@ -99,6 +101,7 @@
 		{
 			_winText.Disable();
 			_loseText.Disable();
+			_nosidesText.Disable();
 		}
 
 		public void ResetColors()
@@ -115,7 +118,7 @@
 			var progress = time / matchDuration;
 
 			_timeCircle.fillAmount = progress;
-			_timeArrow.eulerAngles = Vector3.zero.WithZ( _defaultArrowRotationZ - 360f * progress );
+			_timeArrow.eulerAngles = Vector3.zero.WithZ( _defaultArrowRotationZ - 1 - 360f * progress );
 		}
 	}
 }
