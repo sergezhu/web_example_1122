@@ -56,20 +56,13 @@
 			_nextButton.Init();
 			NextButtonClick = _nextButton.ButtonClick;
 
+			_betView.Initialize();
+			
 			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick, _betView.LeftCommandSelect, _betView.RightCommandSelect };
 			AnyButtonClick = anyClicksObservables.Merge();
 
-			SetupSelectableItems();
-
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
-		}
-
-		private void SetupSelectableItems()
-		{
-			_betView.Initialize();
-			
-			
 		}
 
 		public void Hide()
