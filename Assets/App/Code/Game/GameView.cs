@@ -4,7 +4,9 @@
 	using System.Collections.Generic;
 	using App.Code.FX;
 	using App.Code.UI;
+	using App.Code.Utils;
 	using global::Game.Code.UI.Button;
+	using TMPro;
 	using UniRx;
 	using UnityEngine;
 	using UnityEngine.UI;
@@ -16,6 +18,7 @@
 		[SerializeField] private UINoDataWarningWindow _noDataWarningWindow;
 
 		[Space]
+		[SerializeField] private UIButton _startButton;
 		[SerializeField] private UIButton _nextButton;
 		[SerializeField] private Button _exitButton;
 
@@ -24,6 +27,9 @@
 		[SerializeField] private MatchView _matchView;
 		[SerializeField] private FlagsView _flagsView;
 		[SerializeField] private ResultView _resultView;
+		[SerializeField] private SpriteRandomizer _flagLeftRandomizer;
+		[SerializeField] private SpriteRandomizer _flagRightRandomizer;
+		[SerializeField] private TextMeshProUGUI _hintText;
 
 		[Space]
 		[SerializeField] private FXWrapper _coinsLeftFX;
@@ -31,15 +37,18 @@
 		
 		private GameSettings _settings;
 
-		//public IObservable<Unit> NextButtonClick { get; private set; }
 		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IObservable<Unit> NextButtonClick { get; private set; }
+		public IObservable<Unit> StartButtonClick { get; private set; }
 		public IObservable<Unit> AnyButtonClick { get; private set; }
 
 		public BetView BetView => _betView;
 		public MatchView MatchView => _matchView;
 		public FlagsView FlagsView => _flagsView;
 		public ResultView ResultView => _resultView;
+
+		public SpriteRandomizer FlagLeftRandomizer => _flagLeftRandomizer;
+		public SpriteRandomizer FlagRightRandomizer => _flagRightRandomizer;
 
 
 		public void Construct( GameSettings settings )
@@ -55,6 +64,9 @@
 			
 			_nextButton.Init();
 			NextButtonClick = _nextButton.ButtonClick;
+			
+			_startButton.Init();
+			StartButtonClick = _startButton.ButtonClick;
 
 			_betView.Initialize();
 			
@@ -96,6 +108,48 @@
 		public void ShowNoDataWindow() => _noDataWarningWindow.Show();
 		public void HideNoDataWindow() => _noDataWarningWindow.Hide();
 		public void SetResultNoDataWindow(string result) => _noDataWarningWindow.SetResultText( result );
+
+
+		public void SwitchToBetSView()
+		{
+			BetView.Enable();
+			FlagsView.Disable();
+			MatchView.Disable();
+			//_view.ResultView.Disable();
+
+			_startButton.Enable();
+			_nextButton.Disable();
+			
+			_hintText.Enable();
+			_hintText.text = "Guess the winner";
+		}
+
+		public void SwitchToMatchView()
+		{
+			BetView.Disable();
+			FlagsView.Enable();
+			MatchView.Enable();
+			//_view.ResultView.Disable();
+
+			_startButton.Disable();
+			_nextButton.Disable();
+
+			_hintText.Enable();
+			_hintText.text = "Match is going...";
+		}
+
+		public void SwitchToResultView()
+		{
+			BetView.Disable();
+			FlagsView.Enable();
+			MatchView.Disable();
+			ResultView.Enable();
+
+			_startButton.Disable();
+			_nextButton.Enable();
+
+			_hintText.Disable();
+		}
 
 		/*public void SetCoinsEmission( float value )
 		{

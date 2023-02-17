@@ -1,4 +1,4 @@
-﻿namespace App.Code.Game
+﻿namespace App.Code.Game.Enums
 {
 	public enum ECommand
 	{

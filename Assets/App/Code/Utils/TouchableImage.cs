@@ -1,4 +1,4 @@
-﻿namespace Game.Code.Utilities
+﻿namespace App.Code.Utils
 {
 	using UnityEngine;
 	using UnityEngine.UI;

@@ -5,6 +5,7 @@
 
 	public class GameSettings : MonoBehaviour
 	{
-		public float ResultShowDuration;
+		public float MatchDuration;
+		public int MatchMaxScore;
 	}
 }

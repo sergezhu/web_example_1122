@@ -1,4 +1,4 @@
-﻿namespace Game.Code.Utilities.Extensions
+﻿namespace App.Code.Utils
 {
 	using System;
 	using UniRx;

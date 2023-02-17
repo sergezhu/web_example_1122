@@ -6,7 +6,7 @@
 	using App.Code.Game;
 	using App.Code.Input;
 	using App.Code.Loader;
-	using global::Game.Code.Utilities.Extensions;
+	using App.Code.Utils;
 	using UnityEngine;
 
 	public class Bootstrap : MonoBehaviour

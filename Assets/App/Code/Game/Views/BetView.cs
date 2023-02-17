@@ -1,6 +1,7 @@
 ﻿namespace App.Code.Game
 {
 	using System;
+	using App.Code.Game.Enums;
 	using global::Game.Code.UI.Button;
 	using UniRx;
 	using UnityEngine;
