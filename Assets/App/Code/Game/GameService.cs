@@ -37,7 +37,6 @@
 		private bool _isWin;
 		private int _currentRightIndex;
 		private float _currentTime;
-		private Task _delayTask;
 		private float _timerTick;
 		private List<TimeZone> _timeZones;
 		private int _leftScores;
@@ -53,7 +52,6 @@
 			_settings = settings;
 
 			_timerTick = 0.1f;
-			_delayTask = Task.Delay( TimeSpan.FromSeconds( _timerTick ) );
 		} 
 
 		public void Run()
@@ -129,7 +127,7 @@
 
 			while ( _currentTime <= _settings.MatchDuration )
 			{
-				await _delayTask;
+				await Task.Delay( TimeSpan.FromSeconds( _timerTick ) );
 				_currentTime += _timerTick;
 				_view.MatchView.UpdateMatchTime( _currentTime, matchDuration );
 
