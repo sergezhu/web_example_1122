@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using App.Code.FX;
 	using App.Code.UI;
+	using global::Game.Code.UI.Button;
 	using UniRx;
 	using UnityEngine;
 	using UnityEngine.UI;
@@ -19,6 +20,12 @@
 		[SerializeField] private Button _exitButton;
 
 		[Space]
+		[SerializeField] private BetView _betView;
+		[SerializeField] private MatchView _matchView;
+		[SerializeField] private FlagsView _flagsView;
+		[SerializeField] private ResultView _resultView;
+
+		[Space]
 		[SerializeField] private FXWrapper _coinsLeftFX;
 		[SerializeField] private FXWrapper _coinsRightFX;
 		
@@ -28,7 +35,12 @@
 		public IObservable<Unit> ExitButtonClick { get; private set; }
 		public IObservable<Unit> NextButtonClick { get; private set; }
 		public IObservable<Unit> AnyButtonClick { get; private set; }
-		
+
+		public BetView BetView => _betView;
+		public MatchView MatchView => _matchView;
+		public FlagsView FlagsView => _flagsView;
+		public ResultView ResultView => _resultView;
+
 
 		public void Construct( GameSettings settings )
 		{
@@ -44,11 +56,20 @@
 			_nextButton.Init();
 			NextButtonClick = _nextButton.ButtonClick;
 
-			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick };
+			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick, _betView.LeftCommandSelect, _betView.RightCommandSelect };
 			AnyButtonClick = anyClicksObservables.Merge();
+
+			SetupSelectableItems();
 
 			_noInternetWarningWindow.Hide();
 			_noInternetWarningWindow.Init();
+		}
+
+		private void SetupSelectableItems()
+		{
+			_betView.Initialize();
+			
+			
 		}
 
 		public void Hide()
