@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using App.Code.Game.Enums;
 	using App.Code.Utils;
 	using UniRx;
 	using UnityEngine;
@@ -45,6 +46,12 @@
 
 		public ReactiveCommand GameStarted { get; } = new();
 		public ReactiveCommand<bool> ResultReady { get; } = new();
+
+		public bool IsWin => _view.BetView.BetCommand == ECommand.Left && _leftScores > _rightScores ||
+							 _view.BetView.BetCommand == ECommand.Right && _leftScores < _rightScores;
+
+		public bool IsLose => _view.BetView.BetCommand == ECommand.Left && _leftScores < _rightScores ||
+							 _view.BetView.BetCommand == ECommand.Right && _leftScores > _rightScores;
 
 		public void Construct( GameView view, GameSettings settings ) 
 		{
@@ -122,6 +129,7 @@
 			_view.MatchView.UpdateMatchTime( 0, matchDuration );
 			_view.MatchView.SetLeftScore( 0 );
 			_view.MatchView.SetRightScore( 0 );
+			_view.MatchView.ResetColors();
 
 			await Task.Delay( TimeSpan.FromSeconds( _settings.DelayBeforeMatch ) );
 
@@ -133,6 +141,8 @@
 
 				TryChangeScores();
 			}
+
+			ShowResult();
 		}
 
 		private void SetupTimeZones( int leftFinalScore, int rightFinalScore )
@@ -255,6 +265,15 @@
 					_view.MatchView.SetRightScore( _rightScores );
 					break;
 			}
+		}
+
+		private void ShowResult()
+		{
+			var winStatus = 0;
+			winStatus = IsWin ? 1 : winStatus;
+			winStatus = IsLose ? -1 : winStatus;
+			
+			_view.MatchView.ShowResultText( _view.BetView.BetCommand, winStatus );
 		}
 
 		private void CleanUp()
