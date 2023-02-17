@@ -2,12 +2,18 @@
 {
 	using System.Collections.Generic;
 	using System.Linq;
+	using UnityEngine;
 
 	public static class RandomExtensions
 	{
 		public static int RandomIndex<T>( this IEnumerable<T> enumerable )
 		{
 			var list = enumerable.ToList();
+			return UnityEngine.Random.Range( 0, list.Count );
+		}
+
+		public static int RandomIndex<T>( this List<T> list )
+		{
 			return UnityEngine.Random.Range( 0, list.Count );
 		}
 
@@ -55,6 +61,12 @@
 		{
 			var list = enumerable.ToList();
 			return list[list.RandomIndex()];
+		}
+
+		public static T Random<T>( this List<T> list )
+		{
+			var index = list.RandomIndex();
+			return list[index];
 		}
 
 		public static T PopRandom<T>( this IEnumerable<T> enumerable )

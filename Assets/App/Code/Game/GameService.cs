@@ -5,17 +5,17 @@
 	using System.Linq;
 	using App.Code.Utils;
 	using UniRx;
-	using UnityEditor.VersionControl;
 	using UnityEngine;
 	using Random = UnityEngine.Random;
 	using Task = System.Threading.Tasks.Task;
 
+	[Serializable]
 	public struct TimeZone
 	{
-		private readonly Vector2 _timeRange;
-		private readonly int _index;
+		[SerializeField] private Vector2 _timeRange;
+		[SerializeField] private int _index;
 		
-		private bool NeedGoal;
+		public bool NeedGoal;
 		public bool HasGoal;
 
 		public TimeZone( Vector2 timeRange, int index ) : this()
@@ -39,7 +39,9 @@
 		private float _currentTime;
 		private Task _delayTask;
 		private float _timerTick;
-		private TimeZone[] _timeZones;
+		private List<TimeZone> _timeZones;
+		private int _leftScores;
+		private int _rightScores;
 
 
 		public ReactiveCommand GameStarted { get; } = new();
@@ -115,8 +117,15 @@
 		private async void StartMatchAsync()
 		{
 			_currentTime = 0f;
+			_leftScores = 0;
+			_rightScores = 0;
+			
 			var matchDuration = _settings.MatchDuration;
 			_view.MatchView.UpdateMatchTime( 0, matchDuration );
+			_view.MatchView.SetLeftScore( 0 );
+			_view.MatchView.SetRightScore( 0 );
+
+			await Task.Delay( TimeSpan.FromSeconds( _settings.DelayBeforeMatch ) );
 
 			while ( _currentTime <= _settings.MatchDuration )
 			{
@@ -130,20 +139,23 @@
 
 		private void SetupTimeZones( int leftFinalScore, int rightFinalScore )
 		{
-			_timeZones = new TimeZone[_settings.MatchMaxScore * 2];
+			var count = _settings.MatchMaxScore * 2;
+			_timeZones = new List<TimeZone>( count );
 
-			var zoneDuration = _settings.MatchDuration / (_settings.MatchMaxScore * 2 + 1);
+			var zoneDuration = _settings.MatchDuration / (count + 1);
 
-			for ( var i = 0; i < _timeZones.Length; i++ )
+			for ( var i = 0; i < count; i++ )
 			{
 				var t1 = i * zoneDuration;
 				var t2 = (i + 1) * zoneDuration;
 
-				_timeZones[i] = new TimeZone( new Vector2( t1, t2 ), i );
+				_timeZones.Add( new TimeZone( new Vector2( t1, t2 ), i ) );
 			}
 
 			var timeZonesIndexesForLeft = _timeZones.Where( zone => zone.PlayerIndex == 0 ).Select( zone => zone.Index ).ToList();
 			var timeZonesIndexesForRight = _timeZones.Where( zone => zone.PlayerIndex == 1 ).Select( zone => zone.Index ).ToList();
+			
+			Debug.Log( $"{_timeZones.Count} : {timeZonesIndexesForLeft.Count} + {timeZonesIndexesForRight.Count}" );
 
 			var goalIndexesLeft = new List<int>();
 			var goalIndexesRight = new List<int>();
@@ -173,6 +185,8 @@
 					continue;
 				
 				goalIndexesLeft.Add( goalIndex );
+
+				SetNeedGoal( goalIndex );
 			}
 
 			for ( var j2 = 0; j2 <= rightFinalScore; j2++ )
@@ -183,19 +197,66 @@
 					continue;
 
 				goalIndexesRight.Add( goalIndex );
+
+				SetNeedGoal( goalIndex );
 			}
 
-			var leftInd = "Left Indexes";
-			goalIndexesLeft.ForEach( s => leftInd = $"{leftInd} {s}" );
-			var rightInd = "Right Indexes";
-			goalIndexesRight.ForEach( s => rightInd = $"{rightInd} {s}" );
-			
-			Debug.Log( leftInd );
-			Debug.Log( rightInd );
+			void SetNeedGoal( int gi )
+			{
+				var zone = _timeZones[gi];
+				zone.NeedGoal = true;
+				_timeZones[gi] = zone;
+			}
+
+			{	// DEBUG
+				_view.SetDebugZones( _timeZones );
+
+				var leftInd = "Left Indexes";
+				goalIndexesLeft.ForEach( s => leftInd = $"{leftInd} {s}" );
+				var rightInd = "Right Indexes";
+				goalIndexesRight.ForEach( s => rightInd = $"{rightInd} {s}" );
+
+				Debug.Log( leftInd );
+				Debug.Log( rightInd );
+			}
 		}
 
 		private void TryChangeScores()
 		{
+			var currentTimeZoneIndex = _timeZones.FindIndex( zone => _currentTime >= zone.TimeRange.x && _currentTime <= zone.TimeRange.y );
+			if ( currentTimeZoneIndex == -1 )
+				return;
+			
+			var currentTimeZone = _timeZones[currentTimeZoneIndex];
+			
+			if(!currentTimeZone.NeedGoal)
+				return;
+			
+			if(currentTimeZone.HasGoal)
+				return;
+
+			currentTimeZone.HasGoal = true;
+			_timeZones[currentTimeZoneIndex] = currentTimeZone;
+			
+			HandleGoal( currentTimeZone );
+		}
+
+		private void HandleGoal( TimeZone currentTimeZone )
+		{
+			switch ( currentTimeZone.PlayerIndex )
+			{
+				case 0:
+					_leftScores++;
+					Debug.Log( $"left goal -> {_leftScores}" );
+					_view.MatchView.SetLeftScore( _leftScores );
+					break;
+
+				case 1:
+					_rightScores++;
+					Debug.Log( $"right goal -> {_rightScores}" );
+					_view.MatchView.SetRightScore( _rightScores );
+					break;
+			}
 		}
 
 		private void CleanUp()

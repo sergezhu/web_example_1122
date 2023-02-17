@@ -2,11 +2,11 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using App.Code.FX;
 	using App.Code.Game.Enums;
 	using App.Code.UI;
 	using App.Code.Utils;
-	using global::Game.Code.UI.Button;
 	using TMPro;
 	using UniRx;
 	using UnityEngine;
@@ -35,6 +35,9 @@
 		[Space]
 		[SerializeField] private FXWrapper _coinsLeftFX;
 		[SerializeField] private FXWrapper _coinsRightFX;
+		
+		[Header("debug")]
+		[SerializeField] private List<TimeZone> _timeZones;
 		
 		private GameSettings _settings;
 
@@ -179,5 +182,9 @@
 			_coinsLeftFX.Stop();
 			_coinsRightFX.Stop();
 		}*/
+		public void SetDebugZones( List<TimeZone> timeZones )
+		{
+			_timeZones = timeZones.ToList();
+		}
 	}
 }

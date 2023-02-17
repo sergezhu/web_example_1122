@@ -7,5 +7,6 @@
 	{
 		public float MatchDuration;
 		public int MatchMaxScore;
+		public float DelayBeforeMatch;
 	}
 }
