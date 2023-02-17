@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using App.Code.FX;
+	using App.Code.Game.Enums;
 	using App.Code.UI;
 	using App.Code.Utils;
 	using global::Game.Code.UI.Button;
@@ -63,14 +64,24 @@
 			ExitButtonClick = _exitButton.onClick.AsObservable();
 			
 			_nextButton.Init();
+			_nextButton.Enable = true;
 			NextButtonClick = _nextButton.ButtonClick;
 			
 			_startButton.Init();
+			_startButton.Enable = true;
 			StartButtonClick = _startButton.ButtonClick;
 
 			_betView.Initialize();
 			
-			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick, _betView.LeftCommandSelect, _betView.RightCommandSelect };
+			_betView.LeftCommandSelect
+				.Subscribe( _ => _matchView.SetBetCommand( ECommand.Left ) )
+				.AddTo( this );
+
+			_betView.RightCommandSelect
+				.Subscribe( _ => _matchView.SetBetCommand( ECommand.Right ) )
+				.AddTo( this );
+			
+			var anyClicksObservables = new List<IObservable<Unit>>() { ExitButtonClick, NextButtonClick, StartButtonClick, _betView.LeftCommandSelect, _betView.RightCommandSelect };
 			AnyButtonClick = anyClicksObservables.Merge();
 
 			_noInternetWarningWindow.Hide();

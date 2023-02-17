@@ -108,6 +108,8 @@
 		private void StartMatch(int leftFinalScore, int rightFinalScore)
 		{
 			SetupTimeZones(leftFinalScore, rightFinalScore);
+			
+			StartMatchAsync();
 		}
 
 		private async void StartMatchAsync()

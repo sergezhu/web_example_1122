@@ -11,8 +11,6 @@
 		[SerializeField] private UIBaseButton _leftSelect;
 		[SerializeField] private UIBaseButton _rightSelect;
 
-		public UIBaseButton LeftSelect => _leftSelect;
-		public UIBaseButton RightSelect => _rightSelect;
 		public IObservable<Unit> LeftCommandSelect { get; private set; }
 		public IObservable<Unit> RightCommandSelect { get; private set; }
 		public ECommand BetCommand { get; private set; }
