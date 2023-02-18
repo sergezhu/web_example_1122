@@ -11,5 +11,7 @@
 		[FormerlySerializedAs( "FailAnswer" )] public AudioSource LoseResult;
 		public AudioSource Click;
 		public AudioSource Hit;
+		public AudioSource Tic;
+		public AudioSource Toc;
 	}
 }

@@ -1,6 +1,7 @@
 ﻿namespace App.Code.Audio
 {
 	using System;
+	using System.Threading.Tasks;
 	using App.Code.Game;
 	using UniRx;
 
@@ -11,6 +12,8 @@
 		private readonly GameView _gameView;
 
 		private CompositeDisposable _disposables;
+		private bool _tickerEnabled;
+		private int _ticToc;
 
 		public AudioController( AudioLibrary lib, GameService gameService, GameView gameView )
 		{
@@ -36,6 +39,18 @@
 			_gameView.AnyButtonClick
 				.Subscribe( _ => PlayClick() )
 				.AddTo( _disposables );
+
+			_gameService.SecondsMeterStarted
+				.Subscribe( _ => StartTicker() )
+				.AddTo( _disposables ); 
+
+			_gameService.SecondsMeterStopped
+				.Subscribe( _ => StopTicker() )
+				.AddTo( _disposables );
+
+			_gameService.MatchStarted
+				.Subscribe( _ => PlayStart() )
+				.AddTo( _disposables );
 		}
 
 		private void OnBallHit( (float, float) tuple )
@@ -55,12 +70,18 @@
 				_lib.BgMusic.Stop();
 		}
 
-		private void OnResultReady( bool v )
+		private void OnResultReady( int v )
 		{
-			if(v)
-				PlayWin();
-			else
-				PlayLose();
+			switch ( v )
+			{
+				case 1:
+					PlayWin();
+					break;
+				
+				case -1:
+					PlayLose();
+					break;
+			}
 		}
 
 		private void PlayStart()
@@ -88,6 +109,34 @@
 			_lib.Hit.volume = volume;
 			_lib.Hit.pitch = tone;
 			_lib.Hit.Play();
+		}
+
+		private void PlayTick( bool even )
+		{
+			var src = even ? _lib.Tic : _lib.Toc;
+			src.Play();
+		}
+
+		private async void StartTicker()
+		{
+			if ( _tickerEnabled )
+				return;
+
+			_tickerEnabled = true;
+			_ticToc = 0;
+
+			while ( _tickerEnabled )
+			{
+				PlayTick( _ticToc % 2 == 0 );
+				_ticToc++;
+				
+				await Task.Delay( TimeSpan.FromSeconds( 0.5f ) );
+			}
+		}
+
+		private void StopTicker()
+		{
+			_tickerEnabled = false; 
 		}
 	}
 }

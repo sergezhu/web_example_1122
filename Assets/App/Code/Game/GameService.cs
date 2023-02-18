@@ -45,7 +45,10 @@
 
 
 		public ReactiveCommand GameStarted { get; } = new();
-		public ReactiveCommand<bool> ResultReady { get; } = new();
+		public ReactiveCommand MatchStarted { get; } = new();
+		public ReactiveCommand SecondsMeterStarted { get; } = new();
+		public ReactiveCommand SecondsMeterStopped { get; } = new();
+		public ReactiveCommand<int> ResultReady { get; } = new();
 
 		public bool IsWin => _view.BetView.BetCommand == ECommand.Left && _leftScores > _rightScores ||
 							 _view.BetView.BetCommand == ECommand.Right && _leftScores < _rightScores;
@@ -117,7 +120,7 @@
 		private void StartMatch(int leftFinalScore, int rightFinalScore)
 		{
 			SetupTimeZones(leftFinalScore, rightFinalScore);
-			
+			MatchStarted.Execute();
 			StartMatchAsync();
 		}
 
@@ -134,6 +137,8 @@
 
 			await Task.Delay( TimeSpan.FromSeconds( _settings.DelayBeforeMatch ) );
 
+			SecondsMeterStarted.Execute();
+
 			while ( _currentTime <= _settings.MatchDuration )
 			{
 				await Task.Delay( TimeSpan.FromSeconds( _timerTick ) );
@@ -142,6 +147,10 @@
 
 				TryChangeScores();
 			}
+
+			SecondsMeterStopped.Execute();
+
+			await Task.Delay( TimeSpan.FromSeconds( _settings.DelayBeforeMatch ) );
 
 			ShowResult();
 		}
@@ -273,6 +282,8 @@
 			var winStatus = 0;
 			winStatus = IsWin ? 1 : winStatus;
 			winStatus = IsLose ? -1 : winStatus;
+
+			ResultReady.Execute( winStatus );
 			
 			_view.SwitchToResultView();
 			_view.MatchView.ShowResultText( _view.BetView.BetCommand, winStatus );
