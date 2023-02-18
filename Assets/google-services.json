@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1029741159749",
-    "project_id": "sechuluu",
-    "storage_bucket": "sechuluu.appspot.com"
+    "project_number": "736078159158",
+    "project_id": "crchuk-93254",
+    "storage_bucket": "crchuk-93254.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1029741159749:android:096a29345d7840565c4a2c",
+        "mobilesdk_app_id": "1:736078159158:android:c8b30e31475b9dd6a26797",
         "android_client_info": {
-          "package_name": "bouling.games"
+          "package_name": "bcr.nooning"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1029741159749-jj51llq0pektshvgpdjb5klk1uqrqj5i.apps.googleusercontent.com",
+          "client_id": "736078159158-25slgf1rfj1ndrl5auvo21hatgcnd2ft.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCMBBuHwNKH7XUte4vBEyowid29N0ccjS8"
+          "current_key": "AIzaSyDws5vdvuPOxGQXwi2P9dzbpKJhAMdyyrQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1029741159749-jj51llq0pektshvgpdjb5klk1uqrqj5i.apps.googleusercontent.com",
+              "client_id": "736078159158-25slgf1rfj1ndrl5auvo21hatgcnd2ft.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
